@@ -10,13 +10,11 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRedirect } from "../navigation/RedirectHandlers";
-import { useUser } from "../context/UserContext";
 
 export default function Navbar() {
     const handleRedirectToRegister = useRedirect("/register");
     const handleRedirectToLogin = useRedirect("/login");
-    const handleRedirectToHome = useRedirect("/profile");
-    const { user } = useUser();
+    const handleRedirectToHome = useRedirect("/");
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
