@@ -1,19 +1,22 @@
 import React from 'react';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
-import Register from '../pages/Register';
 import Login from '../pages/Login';
-import Profile from "../pages/Profile";
+import Register from '../pages/Register';
+import Profile from '../pages/Profile';
+import LandingPage from '../pages/LandingPage';
 
-function AppRoutes() {
+const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/profile" element={<Profile/>} />
+            <Route path="/" element={<LandingPage />} /> {/* Nowa Landing Page jako strona główna */}
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+            {/* ... inne route'y jeśli są */}
         </Routes>
+    );
+};
 
-    )
-}
 export default AppRoutes;
