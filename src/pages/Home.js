@@ -17,7 +17,7 @@ import petAges from './HomePageFunctionalities/petAges';
 import petTraits from './HomePageFunctionalities/petTraits';
 
 // Import CSS jest potrzebny tutaj
-import './css/Home.css';
+import './Home.css';
 
 export default function Home() {
     // --- Logika z hooka ---
