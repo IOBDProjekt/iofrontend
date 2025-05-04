@@ -10,12 +10,14 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRedirect } from "../navigation/RedirectHandlers";
-import "./Navbar.css";
+import { useUser } from "../context/UserContext";
+import "./LandingNavbar.css";
 
-export default function Navbar() {
-    const handleRedirectToTasks = useRedirect("/tasks");
-    const handleRedirectToProfile = useRedirect("/profile");
-    const handleRedirectToLogout = useRedirect("/");
+export default function LandingNavbar() {
+    const handleRedirectToRegister = useRedirect("/register");
+    const handleRedirectToLogin = useRedirect("/login");
+    const handleRedirectToLanding = useRedirect("/");
+    const { user } = useUser();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -31,37 +33,27 @@ export default function Navbar() {
         <AppBar position="static" className="app-bar">
             <Container maxWidth="xl" sx={{ padding: "0 20px" }}>
                 <Toolbar disableGutters>
+                    {/* Desktop Logo/Title */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         className="nav-title"
-                        onClick={handleRedirectToTasks}
+                        onClick={handleRedirectToLanding}
                     >
                         Szczęśliwe Łapki
                     </Typography>
 
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        className="nav-title-mobile"
-                        onClick={handleRedirectToTasks}
-                    >
-                        Szczęśliwe Łapki
-                    </Typography>
-
+                    {/* Push buttons to the right */}
                     <Box className="nav-buttons-container">
-                        <Button onClick={handleRedirectToTasks} className="nav-button">
-                            Tasks
+                        <Button onClick={handleRedirectToLogin} className="nav-button">
+                            Login
                         </Button>
-
-                        <Button onClick={handleRedirectToProfile} className="nav-button">
-                            Profile
-                        </Button>
-
-                        <Button onClick={handleRedirectToLogout} className="logout-button">
-                            Logout
+                        <Button
+                            onClick={handleRedirectToRegister}
+                            className="register-button"
+                        >
+                            Register
                         </Button>
                     </Box>
 
@@ -82,45 +74,33 @@ export default function Navbar() {
                             anchorEl={anchorElNav}
                             anchorOrigin={{
                                 vertical: "bottom",
-                                horizontal: "right",
+                                horizontal: "left",
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: "top",
-                                horizontal: "right",
+                                horizontal: "left",
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            className="nav-menu"
                         >
                             <MenuItem
                                 onClick={() => {
-                                    handleRedirectToTasks();
+                                    handleRedirectToRegister();
                                     handleCloseNavMenu();
                                 }}
                                 className="menu-item"
                             >
-                                <Typography textAlign="center">Home</Typography>
+                                <Typography textAlign="center">Register</Typography>
                             </MenuItem>
-
                             <MenuItem
                                 onClick={() => {
-                                    handleRedirectToProfile();
+                                    handleRedirectToLogin();
                                     handleCloseNavMenu();
                                 }}
                                 className="menu-item"
                             >
-                                <Typography textAlign="center">Profile</Typography>
-                            </MenuItem>
-
-                            <MenuItem
-                                onClick={() => {
-                                    handleRedirectToLogout();
-                                    handleCloseNavMenu();
-                                }}
-                                className="menu-item"
-                            >
-                                <Typography textAlign="center">Logout</Typography>
+                                <Typography textAlign="center">Login</Typography>
                             </MenuItem>
                         </Menu>
                     </Box>
