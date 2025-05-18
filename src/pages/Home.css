@@ -1,0 +1,324 @@
+.home-container {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Nowy kontener dla górnych kontrolek */
+.top-controls-container {
+    display: flex;
+    justify-content: space-between; /* Rozsuń elementy na boki */
+    align-items: center; /* Wyśrodkuj pionowo */
+    padding: 0 16px; /* Dopasuj padding do add-button-container */
+    flex-wrap: wrap; /* Pozwól zawijać na mniejszych ekranach */
+    gap: 16px; /* Odstęp między sekcją szukania a dodawania */
+}
+
+/* Sekcja wyszukiwania */
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Mały odstęp między polem a ikoną */
+}
+
+.search-input {
+    /* Tło ustawione w sx, można też tutaj */
+    /* background-color: white; */
+}
+
+/* Ikona/Przycisk wyszukiwania */
+.search-button {
+    background-color: #A27B5C !important; /* Żądany kolor tła */
+    color: white !important; /* Biała ikona dla kontrastu */
+    padding: 8px !important; /* Dopasuj padding - TextField small ma ok. 40px wysokości */
+}
+.search-button:hover {
+    background-color: #8a6a4f !important; /* Ciemniejszy odcień na hover */
+}
+
+
+.add-button-container {
+    display: flex;
+    justify-content: flex-start;
+    /* Usunięto padding-left, bo jest teraz w top-controls-container */
+    /* padding-left: 16px; */
+}
+
+.add-button {
+    background-color: #4CAF50 !important;
+    padding: 10px 24px !important; /* Zmniejszono padding, by pasował do TextField small */
+    font-size: 1rem !important; /* Dopasowano rozmiar czcionki */
+    height: 40px; /* Wysokość taka jak TextField small */
+    box-sizing: border-box; /* Uwzględnij padding w wysokości */
+}
+
+.add-button .MuiButton-startIcon {
+    margin-right: 4px; /* Zmniejsz odstęp ikony */
+}
+
+
+.add-button:hover {
+    background-color: #388E3C !important;
+}
+
+.filter-controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    /* margin-bottom: 24px; Usunięty - odstęp jest teraz zarządzany przez główny flex container */
+    align-items: center;
+}
+
+.filter-controls-container .MuiAutocomplete-root .MuiChip-root {
+    background-color: #e0e0e0 !important;
+}
+.filter-controls-container .MuiAutocomplete-root .MuiChip-root:hover {
+    background-color: #d5d5d5 !important;
+}
+
+.posts-grid {
+    display: flex;
+    gap: 40px;
+    padding: 0 40px;
+}
+
+.grid-column {
+    flex: 1;
+}
+
+.pet-card {
+    margin-bottom: 24px !important;
+    cursor: pointer;
+    width: 100%;
+    border: 2px solid #fff;
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.pet-card:hover {
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12) !important;
+    border: 2px solid #e0e0e0;
+}
+
+.card-image-container {
+    padding: 10px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    width: 80%;
+    border-radius: 4px;
+}
+
+.card-content {
+    padding: 16px !important;
+    text-align: center;
+}
+
+.pet-name {
+    font-size: 1.4rem !important;
+    font-weight: bold !important;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px !important;
+}
+
+.pagination-button {
+    padding: 12px !important;
+    font-size: 1.2rem !important;
+}
+
+.page-info {
+    font-size: 1.3rem !important;
+}
+
+.modal-title {
+    font-size: 1.8rem !important;
+    font-weight: bold !important;
+    text-align: center;
+    padding: 16px !important;
+}
+
+.modal-content {
+    padding: 12px !important;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.add-modal .form-container .form-field,
+.add-modal .form-container .MuiFormControl-root,
+.add-modal .form-container .MuiAutocomplete-root {
+    margin-top: 16px !important;
+}
+
+
+.image-upload-button {
+    padding: 12px !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 8px;
+}
+
+.image-preview-container {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin-top: 16px !important;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.modal-actions {
+    justify-content: space-between !important;
+    padding: 12px !important;
+    margin-top: 16px;
+}
+
+.cancel-button {
+    font-size: 1.1rem !important;
+    padding: 8px 16px !important;
+}
+
+.submit-button {
+    font-size: 1.1rem !important;
+    padding: 8px 24px !important;
+}
+
+.pet-modal-title {
+    font-size: 2.2rem !important;
+    font-weight: bold !important;
+    text-align: center;
+    padding: 16px !important;
+}
+
+.pet-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.pet-image-container {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.pet-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.pet-description {
+    font-size: 1.4rem !important;
+    text-align: center;
+    line-height: 1.6 !important;
+    padding: 0 20px !important;
+    margin-top: 0 !important;
+}
+
+.pet-modal-actions {
+    justify-content: center !important;
+    padding: 20px !important;
+}
+
+.close-button {
+    font-size: 1.2rem !important;
+    padding: 10px 30px !important;
+}
+
+.add-modal .MuiChip-root,
+.view-modal .MuiChip-root {
+    background-color: #B3D8A8 !important;
+    font-weight: 500 !important;
+    padding: 4px 8px !important;
+    height: auto !important;
+    font-size: 0.95rem !important;
+}
+
+.add-modal .MuiChip-root:hover,
+.view-modal .MuiChip-root:hover {
+    background-color: #a3c898 !important;
+}
+
+/* Vet Advice Page Styles */
+.vet-advice-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #E8F5E9;
+}
+
+.vet-advice-card {
+    display: flex;
+    height: 200px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.vet-advice-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vet-advice-image {
+    width: 300px;
+    object-fit: cover;
+}
+
+.vet-advice-content {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vet-advice-modal-image {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    margin-bottom: 16px;
+}
+
+.add-advice-button {
+    background-color: #388E3C !important;
+}
+
+.add-advice-button:hover {
+    background-color: #2E7D32 !important;
+}
