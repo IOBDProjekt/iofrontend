@@ -1,4 +1,3 @@
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import {BrowserRouter, useLocation} from "react-router-dom";
 import AppRoutes from "./navigation/AppRoutes";
