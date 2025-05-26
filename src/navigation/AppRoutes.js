@@ -5,6 +5,7 @@ import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Profile from "../pages/Profile";
 import Landing from "../pages/Landing";
+import VetAdvice from '../pages/VetAdvice';
 
 function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ function AppRoutes() {
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/profile" element={<Profile/>} />
+            <Route path="/advice" element={<VetAdvice />} />
         </Routes>
 
     )
