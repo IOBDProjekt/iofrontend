@@ -10,14 +10,12 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRedirect } from "../navigation/RedirectHandlers";
-import { useUser } from "../context/UserContext";
-import "./LandingNavbar.css";
 
-export default function LandingNavbar() {
+export default function Navbar() {
     const handleRedirectToRegister = useRedirect("/register");
     const handleRedirectToLogin = useRedirect("/login");
-    const handleRedirectToLanding = useRedirect("/");
-    const { user } = useUser();
+    const handleRedirectToHome = useRedirect("/");
+    const handleRedirectToAdvice = useRedirect("/advice");
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -30,7 +28,14 @@ export default function LandingNavbar() {
     };
 
     return (
-        <AppBar position="static" className="app-bar">
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "var(--primary-bg)",
+                width: "100%",
+                boxShadow: "none",
+            }}
+        >
             <Container maxWidth="xl" sx={{ padding: "0 20px" }}>
                 <Toolbar disableGutters>
                     {/* Desktop Logo/Title */}
@@ -38,26 +43,64 @@ export default function LandingNavbar() {
                         variant="h6"
                         noWrap
                         component="div"
-                        className="nav-title"
-                        onClick={handleRedirectToLanding}
+                        sx={{
+                            cursor: "pointer",
+                            "&:hover": { color: "var(--hover-title)" },
+                        }}
+                        onClick={handleRedirectToHome}
                     >
                         Szczęśliwe Łapki
                     </Typography>
 
                     {/* Push buttons to the right */}
-                    <Box className="nav-buttons-container">
-                        <Button onClick={handleRedirectToLogin} className="nav-button">
+                    <Box sx={{ ml: "auto", display: { xs: "none", md: "flex" }, gap: 2 }}>
+                        <Button
+                            onClick={handleRedirectToAdvice}
+                            sx={{
+                                my: 2,
+                                color: "white",
+                                backgroundColor: "transparent",
+                                padding: "8px 16px",
+                                borderRadius: "8px",
+                                "&:hover": {
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
+                        >
+                            Porady
+                        </Button>
+                        <Button
+                            onClick={handleRedirectToLogin}
+                            sx={{
+                                my: 2,
+                                color: "white",
+                                backgroundColor: "transparent",
+                                padding: "8px 16px",
+                                borderRadius: "8px",
+                                "&:hover": {
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
+                        >
                             Login
                         </Button>
                         <Button
                             onClick={handleRedirectToRegister}
-                            className="register-button"
+                            sx={{
+                                my: 2,
+                                color: "white",
+                                backgroundColor: "var(--accent-color)",
+                                "&:hover": {
+                                    backgroundColor: "#E3A02D",
+                                },
+                            }}
                         >
                             Register
                         </Button>
                     </Box>
 
-                    <Box className="nav-buttons-container-mobile">
+                    {/* Mobile Menu Icon */}
+                    <Box sx={{ display: { xs: "flex", md: "none" }, ml: "auto" }}>
                         <IconButton
                             size="large"
                             aria-label="navigation menu"
@@ -65,7 +108,11 @@ export default function LandingNavbar() {
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
                             color="inherit"
-                            className="icon-button"
+                            sx={{
+                                "&:hover": {
+                                    backgroundColor: "rgba(255, 235, 205, 0.2)",
+                                },
+                            }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -86,10 +133,27 @@ export default function LandingNavbar() {
                         >
                             <MenuItem
                                 onClick={() => {
+                                    handleRedirectToAdvice();
+                                    handleCloseNavMenu();
+                                }}
+                                sx={{
+                                    "&:hover": {
+                                        backgroundColor: "#FFF8E1",
+                                    },
+                                }}
+                            >
+                                <Typography textAlign="center">Porady</Typography>
+                            </MenuItem>
+                            <MenuItem
+                                onClick={() => {
                                     handleRedirectToRegister();
                                     handleCloseNavMenu();
                                 }}
-                                className="menu-item"
+                                sx={{
+                                    "&:hover": {
+                                        backgroundColor: "#FFF8E1",
+                                    },
+                                }}
                             >
                                 <Typography textAlign="center">Register</Typography>
                             </MenuItem>
@@ -98,7 +162,11 @@ export default function LandingNavbar() {
                                     handleRedirectToLogin();
                                     handleCloseNavMenu();
                                 }}
-                                className="menu-item"
+                                sx={{
+                                    "&:hover": {
+                                        backgroundColor: "#FFF8E1",
+                                    },
+                                }}
                             >
                                 <Typography textAlign="center">Login</Typography>
                             </MenuItem>

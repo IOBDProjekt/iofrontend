@@ -12,7 +12,7 @@ const defaultPosts = [
     },
     {
         id: 2,
-        name: 'Emeliza',
+        name: 'Maja',
         description: 'Spokojna suczka, idealna dla rodzin z dziećmi.',
         image: '/post2.jpg',
         category: 'Pies',
