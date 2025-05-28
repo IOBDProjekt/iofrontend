@@ -1,15 +1,10 @@
-// src/pages/HomePageFunctionalities/useHomeLogic.js
-
 import { useState, useMemo, useEffect } from 'react';
-// JEDYNY potrzebny import danych dla tego hooka
 import defaultPosts from './defaultPosts';
 
-// Stała definiowana w zakresie modułu
 const postsPerPage = 6;
+const FAVORITES_KEY = 'favoritePets';
 
-// Eksport funkcji hooka
 export default function useHomeLogic() {
-    // --- Stan zarządzany przez hook ---
     const [userPosts, setUserPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('');
@@ -17,7 +12,26 @@ export default function useHomeLogic() {
     const [selectedTraitsFilter, setSelectedTraitsFilter] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // --- Obliczenia i dane pochodne ---
+    const [favorites, setFavorites] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem(FAVORITES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+        return [];
+    });
+
+    const toggleFavorite = (petId) => {
+        setFavorites(prev => {
+            const newFavorites = prev.includes(petId)
+                ? prev.filter(id => id !== petId)
+                : [...prev, petId];
+            if (typeof window !== 'undefined') {
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
+            }
+            return newFavorites;
+        });
+    };
+
     const allPosts = useMemo(() => [...defaultPosts, ...userPosts], [userPosts]);
 
     const filteredPosts = useMemo(() => {
@@ -62,7 +76,6 @@ export default function useHomeLogic() {
         return cols;
     }, [currentPosts]);
 
-    // --- Funkcje modyfikujące stan (zwracane przez hook) ---
     const paginate = (pageNumber) => {
         if (pageNumber >= 1 && pageNumber <= totalPages) {
             setCurrentPage(pageNumber);
@@ -97,8 +110,6 @@ export default function useHomeLogic() {
 
     const addUserPost = (newPet) => {
         setUserPosts(prev => [newPet, ...prev]);
-
-        // Logika nawigacji po dodaniu
         const doesCategoryMatch = selectedCategoryFilter ? newPet.category === selectedCategoryFilter : true;
         const doesAgeMatch = selectedAgeFilter ? newPet.age === selectedAgeFilter : true;
         const doesTraitsMatch = selectedTraitsFilter.length > 0
@@ -129,7 +140,6 @@ export default function useHomeLogic() {
         }
     };
 
-    // --- Zwracana wartość hooka ---
     return {
         currentPage,
         totalPages,
@@ -139,11 +149,14 @@ export default function useHomeLogic() {
         selectedAgeFilter,
         selectedTraitsFilter,
         searchTerm,
+        favorites,
+        toggleFavorite,
         paginate,
         handleCategoryFilterChange,
         handleAgeFilterChange,
         handleTraitsFilterChange,
         handleSearchChange,
-        addUserPost
+        addUserPost,
+        allPosts
     };
 }

@@ -3,32 +3,29 @@ import { Box, Button, Typography, TextField, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 
-// Import komponentów UI
 import PostsGrid from './HomePageFunctionalities/PostsGrid';
 import AddPetModal from './HomePageFunctionalities/AddPetModal';
 import ViewPetModal from './HomePageFunctionalities/ViewPetModal';
 import PaginationControls from './HomePageFunctionalities/PaginationControls';
 import FilterControls from './HomePageFunctionalities/FilterControls';
-// Import hooka z logiką
+
 import useHomeLogic from './HomePageFunctionalities/useHomeLogic';
-// Import danych potrzebnych dla modala i filtrów (są używane tutaj)
+
 import petCategories from './HomePageFunctionalities/petCategories';
 import petAges from './HomePageFunctionalities/petAges';
 import petTraits from './HomePageFunctionalities/petTraits';
 
-// Import CSS jest potrzebny tutaj
 import './Home.css';
 
 export default function Home() {
-    // --- Logika z hooka ---
     const {
-        currentPage, totalPages, columns, totalFilteredPosts, // Dodano totalFilteredPosts
+        currentPage, totalPages, columns, totalFilteredPosts,
         selectedCategoryFilter, selectedAgeFilter, selectedTraitsFilter, searchTerm,
-        paginate, handleCategoryFilterChange, handleAgeFilterChange,
+        paginate, handleCategoryFilterChange, handleAgeFilterChange, favorites,
+        toggleFavorite,
         handleTraitsFilterChange, handleSearchChange, addUserPost
     } = useHomeLogic();
 
-    // --- Stan zarządzany lokalnie (modale, formularz dodawania) ---
     const [openAddModal, setOpenAddModal] = useState(false);
     const [openViewModal, setOpenViewModal] = useState(false);
     const [selectedPet, setSelectedPet] = useState(null);
@@ -39,7 +36,6 @@ export default function Home() {
     };
     const [formData, setFormData] = useState(initialFormData);
 
-    // --- Handlery lokalne (modale, formularz dodawania) ---
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -94,7 +90,6 @@ export default function Home() {
         setOpenViewModal(true);
     };
 
-    // --- Renderowanie ---
     return (
         <Box className="home-container">
             <Box className="top-controls-container">
@@ -138,14 +133,18 @@ export default function Home() {
             />
 
             {columns.flat().length > 0 ? (
-                <PostsGrid posts={columns} onPetClick={handleViewPet} />
+                <PostsGrid
+                    posts={columns}
+                    onPetClick={handleViewPet}
+                    favorites={favorites}
+                    onToggleFavorite={toggleFavorite}
+                />
             ) : (
                 <Typography variant="h6" sx={{ textAlign: 'center', my: 4, color: 'text.secondary' }}>
                     {searchTerm || selectedCategoryFilter || selectedAgeFilter || selectedTraitsFilter.length > 0 ? 'Brak zwierząt pasujących do wyszukiwania i filtrów.' : 'Brak zwierząt do wyświetlenia.'}
                 </Typography>
             )}
 
-            {/* Poprawiony warunek: renderuj paginację, jeśli jest więcej niż jedna strona */}
             {totalPages > 1 && (
                 <PaginationControls
                     currentPage={currentPage}
@@ -173,6 +172,8 @@ export default function Home() {
                 open={openViewModal}
                 onClose={handleCloseViewModal}
                 pet={selectedPet}
+                isFavorite={selectedPet && favorites.includes(selectedPet.id)}
+                onToggleFavorite={toggleFavorite}
             />
         </Box>
     );
