@@ -1,43 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
+import UserProfile from "../assets/Profiles/UserProfile";
+import ShelterProfile from "../assets/Profiles/ShelterProfile";
+import AdminProfile from "../assets/Profiles/AdminProfile";
+import api from "../api";
 
 export default function Profile() {
     const { user, setUser } = useUser();
     const [profile, setProfile] = useState(user);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        // Retrieve the token from localStorage
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem("authToken");
         if (!token) {
-            setError("Brak tokena autoryzacyjnego. Zaloguj się, aby zobaczyć profil.");
+            setError(
+                "Brak tokena autoryzacyjnego. Zaloguj się, aby zobaczyć profil."
+            );
             return;
         }
 
-        // Fetch the profile using the token in the Authorization header
-        fetch('https://iobackend.onrender.com/auth/me', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Błąd podczas pobierania danych profilu.");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setProfile(data);
-                // Optionally update the user context if needed
-                setUser(data);
-            })
-            .catch(err => {
-                console.error(err);
-                setError(err.message);
-            });
-    }, [setUser]);
+        const fetchProfileData = async () => {
+            try {
+                const response = await api.get("/auth/me", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                setProfile(response.data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
+        fetchProfileData();
+    }, []);
 
     if (error) {
         return <div className="container">{error}</div>;
@@ -47,11 +45,12 @@ export default function Profile() {
         return <div className="container">Ładowanie...</div>;
     }
 
-    return (
-        <div className="container">
-            <h2>Profil</h2>
-            <p><strong>Email:</strong> {profile.email}</p>
-            <p><strong>Username:</strong> {profile.username}</p>
-        </div>
-    );
+    switch (profile.role) {
+        case "user":
+            return <UserProfile />;
+        case "shelter":
+            return <ShelterProfile />;
+        case "admin":
+            return <AdminProfile />;
+    }
 }
