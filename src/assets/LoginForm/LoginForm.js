@@ -74,6 +74,9 @@ const LoginForm = ({ successLogin }) => {
                 <Link to={"/register"}>
                     Nie masz konta? Dołącz do naszej platformy!
                 </Link>
+                <Link to={"/reset-password"}>
+                    Zapomniałeś hasła? Zresetuj hasło
+                </Link>
             </form>
         </div>
     );

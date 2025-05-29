@@ -1,22 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
 
-const EmailForm = ({ formTitle, buttonText, submitLink }) => {
-    const refEmail = useRef();
+const ResetPasswordForm = ({ resetToken }) => {
+    const refPassword = useRef();
 
     const [formErrors, setFormErrors] = useState([]);
     const [success, setSuccess] = useState([]);
 
-    const handleSendEmail = async (e) => {
+    const handleRestPassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post(submitLink, {
-                email: refEmail.current.value,
+            const response = await api.post("/auth/reset-password", {
+                token: resetToken,
+                password: refPassword.current.value,
             });
 
             setSuccess((prev) => [response?.data?.message]);
-            setFormErrors([]);
         } catch (error) {
             console.log(error);
             setFormErrors((prev) => [
@@ -29,15 +29,15 @@ const EmailForm = ({ formTitle, buttonText, submitLink }) => {
     };
 
     const errorsContainer = (
-        <div className="email-form-errors">
+        <div className="reset-password-form-errors">
             {formErrors.map((fe, index) => (
                 <span key={index}>{fe}</span>
             ))}
         </div>
     );
 
-    const successMessage = (
-        <div className="email-form-success">
+    const successContainer = (
+        <div className="reset-password-success">
             {success.map((fe, index) => (
                 <span key={index}>{fe}</span>
             ))}
@@ -45,11 +45,11 @@ const EmailForm = ({ formTitle, buttonText, submitLink }) => {
     );
 
     return (
-        <div className="email-container">
-            <div className="email-hero">
-                <div className="email-hero-image"></div>
-                <div className="email-hero-cover"></div>
-                <div className="email-hero-text">
+        <div className="reset-password-container">
+            <div className="reset-password-hero">
+                <div className="reset-password-hero-image"></div>
+                <div className="reset-password-hero-cover"></div>
+                <div className="reset-password-hero-text">
                     <h1>Szczęśliwe łapki</h1>
                     <p>
                         Tysiące psów i kotów każdego dnia szukają ciepła,
@@ -60,26 +60,26 @@ const EmailForm = ({ formTitle, buttonText, submitLink }) => {
                     </p>
                 </div>
             </div>
-            <form className="email-form">
-                <h2>{formTitle}</h2>
+            <form className="reset-password-form">
+                <h2>Zmiana hasła</h2>
                 {formErrors.length > 0 && errorsContainer}
-                {success.length > 0 && successMessage}
-                <div className="email-form-inputs">
+                {success.length > 0 && successContainer}
+                <div className="reset-password-form-inputs">
                     <input
-                        type="email"
-                        ref={refEmail}
-                        placeholder="Wpisz swój adres email"
+                        type="password"
+                        ref={refPassword}
+                        placeholder="Nowe hasło"
                     />
                 </div>
-                <button className="email-form-submit" onClick={handleSendEmail}>
-                    {buttonText}
+                <button
+                    className="reset-password-form-submit"
+                    onClick={handleRestPassword}
+                >
+                    Zresetuj hasło
                 </button>
-                <Link to={"/login"}>
-                    Masz już konto zaloguj się do naszej platformy!
-                </Link>
             </form>
         </div>
     );
 };
 
-export default EmailForm;
+export default ResetPasswordForm;

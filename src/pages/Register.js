@@ -24,6 +24,7 @@ export default function Register() {
                 />
             ) : (
                 <EmailForm
+                    submitLink={"/auth/email-verification"}
                     formTitle={"Rejestracja"}
                     buttonText={"Zarejestruj się"}
                 />
