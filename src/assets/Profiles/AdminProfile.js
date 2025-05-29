@@ -1,12 +1,11 @@
 import React from "react";
 import "./AdminProfile.css";
+import AdminPanel from "../AdminPanel/AdminPanel";
+
+import "../AdminPanel/AdminPanel.css";
 
 const AdminProfile = () => {
-    return (
-        <>
-            <span>Konto administratora</span>
-        </>
-    );
+    return <AdminPanel />;
 };
 
 export default AdminProfile;

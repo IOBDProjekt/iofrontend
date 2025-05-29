@@ -17,15 +17,17 @@ const LoginForm = ({ successLogin }) => {
             });
 
             localStorage.setItem("authToken", response.data["token"]);
-            successLogin();
+
+            const userdata = await api.get("/auth/me", {
+                headers: {
+                    Authorization: `Bearer ${response.data.token}`,
+                },
+            });
+
+            successLogin(userdata.data);
         } catch (error) {
             console.log(error);
-            setFormErrors((prev) => [
-                ...(error?.response?.data?.messages || [
-                        error?.response?.data?.message,
-                    ] ||
-                    []),
-            ]);
+            setFormErrors((prev) => [...(error?.response?.data?.messages || [error?.response?.data?.message] || [])]);
         }
     };
 
@@ -45,11 +47,9 @@ const LoginForm = ({ successLogin }) => {
                 <div className="login-hero-text">
                     <h1>Szczęśliwe łapki</h1>
                     <p>
-                        Tysiące psów i kotów każdego dnia szukają ciepła,
-                        bezpieczeństwa i człowieka, któremu będą mogły zaufać.
-                        Dzięki naszej aplikacji poznasz ich historie, nawiążesz
-                        kontakt ze schroniskiem i dasz im szansę na nowe, lepsze
-                        życie u Twojego boku.
+                        Tysiące psów i kotów każdego dnia szukają ciepła, bezpieczeństwa i człowieka, któremu będą mogły zaufać. Dzięki
+                        naszej aplikacji poznasz ich historie, nawiążesz kontakt ze schroniskiem i dasz im szansę na nowe, lepsze życie u
+                        Twojego boku.
                     </p>
                 </div>
             </div>
@@ -57,26 +57,14 @@ const LoginForm = ({ successLogin }) => {
                 <h2>Zaloguj się</h2>
                 {formErrors.length > 0 && errorsContainer}
                 <div className="login-form-inputs">
-                    <input
-                        type="email"
-                        ref={refEmail}
-                        placeholder="Wpisz swój adres email"
-                    />
-                    <input
-                        type="password"
-                        ref={refPassword}
-                        placeholder="Wpisz swoje hasło"
-                    />
+                    <input type="email" ref={refEmail} placeholder="Wpisz swój adres email" />
+                    <input type="password" ref={refPassword} placeholder="Wpisz swoje hasło" />
                 </div>
                 <button className="login-form-submit" onClick={handleLogin}>
                     Zaloguj się
                 </button>
-                <Link to={"/register"}>
-                    Nie masz konta? Dołącz do naszej platformy!
-                </Link>
-                <Link to={"/reset-password"}>
-                    Zapomniałeś hasła? Zresetuj hasło
-                </Link>
+                <Link to={"/register"}>Nie masz konta? Dołącz do naszej platformy!</Link>
+                <Link to={"/reset-password"}>Zapomniałeś hasła? Zresetuj hasło</Link>
             </form>
         </div>
     );

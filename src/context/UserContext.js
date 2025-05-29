@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 const UserContext = createContext();
 
@@ -17,9 +17,10 @@ export const UserProvider = ({ children }) => {
         setUser(null);
     };
 
-    return (
-        <UserContext.Provider value={{ user, setUser, loginUser, logoutUser }}>
-            {children}
-        </UserContext.Provider>
-    );
+    const isUserLoggedIn = () => {
+        if (localStorage.getItem("authToken")) return true;
+        else return false;
+    };
+
+    return <UserContext.Provider value={{ user, setUser, loginUser, logoutUser, isUserLoggedIn }}>{children}</UserContext.Provider>;
 };

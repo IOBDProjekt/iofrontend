@@ -1,0 +1,79 @@
+.admin-panel {
+    height: calc(100vh - 72.5px);
+    display: grid;
+    grid-template-columns: 250px 1fr;
+}
+
+.admin-panel > aside {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(31, 31, 31);
+    color: #fff;
+}
+
+.admin-panel > aside > h3 {
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.3rem;
+    padding-top: 2rem;
+}
+
+.admin-tabs {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 5rem;
+    padding: 0;
+}
+
+.admin-tabs > li {
+    width: 100%;
+    padding: 1rem 0;
+    cursor: pointer;
+    transition: background-color 75ms ease-in-out;
+}
+
+.admin-tabs > li:hover {
+    background-color: rgb(34, 56, 29);
+}
+
+.admin-tabs > li > p {
+    width: 100%;
+    margin: 0;
+    font-size: 1.1rem;
+    margin-left: 2rem;
+}
+
+.admin-tab-content > h3 {
+    font-weight: normal;
+    letter-spacing: 1px;
+    padding-left: 1rem;
+    padding-top: 0.3rem;
+    font-size: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.admin-tab-content button {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-left: 1rem;
+}
+
+.admin-tab-content button:hover {
+    background-color: #c3e6cb;
+}
+
+.admin-tab-content button:active {
+    transform: scale(0.98);
+}

@@ -9,7 +9,7 @@ import "../assets/EmailForm/EmailForm.css";
 import RegisterForm from "../assets/RegisterForm/RegisterForm";
 
 export default function Register() {
-    const handleRedirectToLogin = useRedirect("/profile");
+    const handleRedirectToLogin = useRedirect("/login");
     const [searchParams] = useSearchParams();
     const emailToken = searchParams.get("email");
 
@@ -18,16 +18,9 @@ export default function Register() {
     return (
         <div className="register-wrapper">
             {showFullRegister ? (
-                <RegisterForm
-                    emailToken={emailToken}
-                    successRegister={handleRedirectToLogin}
-                />
+                <RegisterForm emailToken={emailToken} successRegister={handleRedirectToLogin} />
             ) : (
-                <EmailForm
-                    submitLink={"/auth/email-verification"}
-                    formTitle={"Rejestracja"}
-                    buttonText={"Zarejestruj się"}
-                />
+                <EmailForm submitLink={"/auth/email-verification"} formTitle={"Rejestracja"} buttonText={"Zarejestruj się"} />
             )}
         </div>
     );
