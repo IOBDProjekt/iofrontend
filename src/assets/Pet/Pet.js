@@ -8,12 +8,7 @@ import {
     Box
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
-const getImageUrl = id_image =>
-    id_image
-        ? `${process.env.REACT_APP_API_BASE_URL}/image/${id_image}`
-        : '/post1.png';
-
+import { getImageUrl } from './imageUtils';
 /**
  * Displays a single pet as a card.
  * Props:
