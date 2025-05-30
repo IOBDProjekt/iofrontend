@@ -5,10 +5,13 @@ import {
     CardContent,
     Typography,
     IconButton,
-    Box
+    Box,
+    Stack,
+    Chip
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { getImageUrl } from './imageUtils';
+import { getImageUrl } from './utils/imageUtils';
+
 /**
  * Displays a single pet as a card.
  * Props:
@@ -55,6 +58,18 @@ export default function Pet({ pet, onSelect }) {
                 <Typography variant="h6" component="div" noWrap>
                     {pet.name}
                 </Typography>
+
+                {pet.tags && pet.tags.length > 0 && (
+                    <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
+                        {pet.tags.map(tag => (
+                            <Chip
+                                key={tag}
+                                label={tag}
+                                size="small"
+                            />
+                        ))}
+                    </Stack>
+                )}
             </CardContent>
         </Card>
     );
