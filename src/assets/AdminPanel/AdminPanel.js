@@ -11,49 +11,7 @@ import ShelterModal from "./AdminModals/ShelterModal";
 const AdminPanel = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [shelters, setShelters] = useState([]);
-    const [shelterInfo, setShelterInfo] = useState({});
-    const [modalErrors, setModalErrors] = useState([]);
-    const [modalSuccess, setModalSuccess] = useState([]);
-
-    const handleAddShelter = async (shelterData) => {
-        try {
-            const response = await api.post("/shelter", {
-                name: shelterData.name,
-                city: shelterData.city,
-                number: shelterData.number,
-                email: shelterData.email,
-            });
-
-            setModalErrors((prev) => []);
-            setModalSuccess((prev) => [response.data["message"]]);
-            setShelters((prev) => [...prev, response.data["newShelter"]]);
-
-            return true;
-        } catch (error) {
-            setModalErrors((prev) => [...(error?.response?.data?.messages || [error?.response?.data?.message] || [])]);
-            return false;
-        }
-    };
-
-    const tabs = [
-        <UsersTab />,
-        <ShelterAccountsTab />,
-        <SheltersTab
-            createShelterButton={
-                <ShelterModal
-                    errors={modalErrors}
-                    title={"Zarejestruj nowe schronisko"}
-                    updateShelterInfo={setShelterInfo}
-                    onSubmit={handleAddShelter}
-                    setErrors={setModalErrors}
-                    success={modalSuccess}
-                    setSuccess={setModalSuccess}
-                />
-            }
-            shelters={shelters}
-            setShelters={setShelters}
-        />,
-    ];
+    const [shelterAccounts, setShelterAccounts] = useState([]);
 
     const fetchAllShelters = async () => {
         try {
@@ -62,8 +20,22 @@ const AdminPanel = () => {
         } catch (error) {}
     };
 
+    const fetchAllShelterAccount = async () => {
+        try {
+            const response = await api.get("/auth/shelter-accounts");
+            setShelterAccounts([...response?.data?.shelterAccounts]);
+        } catch (error) {}
+    };
+
+    const tabs = [
+        <UsersTab />,
+        <ShelterAccountsTab accounts={shelterAccounts} updateAccounts={fetchAllShelterAccount} />,
+        <SheltersTab shelters={shelters} updateShelters={fetchAllShelters} />,
+    ];
+
     useEffect(() => {
         fetchAllShelters();
+        fetchAllShelterAccount();
     }, []);
 
     return (

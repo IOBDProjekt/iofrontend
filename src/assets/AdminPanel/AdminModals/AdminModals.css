@@ -62,7 +62,7 @@
     cursor: pointer;
     width: 75%;
     margin-bottom: 5rem;
-    transition: background-color 155ms ease-in-out;
+    transition: background-color 155ms ease-in-out, scale 100ms ease-in-out;
     letter-spacing: 0.5px;
     border-radius: 7px;
     margin: 0 auto;
@@ -75,14 +75,18 @@
     background-color: #32a338;
 }
 
+.admin-modal-submit:active {
+    scale: 0.98;
+}
+
 .admin-modal-errors {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin: 0 auto;
-    margin-bottom: 2rem;
     max-width: 400px;
     margin-top: -2rem;
+    margin-bottom: 2rem;
 }
 
 .admin-modal-errors > span {
@@ -118,4 +122,16 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
+}
+
+.admin-tab-content button.admin-modal-edit-button {
+    background-color: rgb(196, 232, 249);
+    margin: 0;
+    margin-left: auto;
+    margin-right: 15px;
+    display: block;
+}
+
+.admin-tab-content button.admin-modal-edit-button:hover {
+    background-color: rgb(157, 219, 248);
 }
