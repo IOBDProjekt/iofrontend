@@ -6,7 +6,6 @@ import ShelterAccountsTab from "./AdminTabs/ShelterAccountsTab";
 import SheltersTab from "./AdminTabs/SheltersTab";
 import "./AdminTabs/AdminTabsTable.css";
 import api from "../../api";
-import ShelterModal from "./AdminModals/ShelterModal";
 
 const AdminPanel = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -30,7 +29,12 @@ const AdminPanel = () => {
     const tabs = [
         <UsersTab />,
         <ShelterAccountsTab accounts={shelterAccounts} updateAccounts={fetchAllShelterAccount} />,
-        <SheltersTab shelters={shelters} updateShelters={fetchAllShelters} />,
+        <SheltersTab
+            shelters={shelters}
+            updateShelters={fetchAllShelters}
+            accounts={shelterAccounts}
+            updateAccounts={fetchAllShelterAccount}
+        />,
     ];
 
     useEffect(() => {
