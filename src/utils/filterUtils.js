@@ -15,9 +15,11 @@ export function parseAgeFilter(ageStr) {
     return null;
 }
 
-export function filterPets(pets, filters) {
+export function filterPets(pets, filters, tagsList) {
     return pets.filter(p => {
-        if (filters.name && !p.name.toLowerCase().includes(filters.name.toLowerCase())) return false;
+        if (filters.name && !p.name.toLowerCase().includes(filters.name.toLowerCase())) {
+            return false;
+        }
 
         if (filters.age) {
             const filterRange = parseAgeFilter(filters.age);
@@ -32,19 +34,34 @@ export function filterPets(pets, filters) {
             }
         }
 
-        if (filters.condition && p.condition !== filters.condition) return false;
+        if (filters.condition && p.condition !== filters.condition) {
+            return false;
+        }
+
         if (filters.id_breed && p.id_breed !== Number(filters.id_breed)) return false;
         if (filters.id_species && p.id_species !== Number(filters.id_species)) return false;
         if (filters.id_shelter && p.id_shelter !== Number(filters.id_shelter)) return false;
         if (filters.sex && p.sex !== filters.sex) return false;
         if (filters.status && p.status !== filters.status) return false;
-        if (
-            filters.tags.length > 0 &&
-            (!Array.isArray(p.tags) || !filters.tags.every(t => p.tags.includes(t)))
-        ) {
-            return false;
-        }
 
+        if (Array.isArray(filters.tags) && filters.tags.length > 0) {
+            const petTagCharacters = Array.isArray(p.tags)
+                ? p.tags
+                    .map(rawId => {
+                        const idAsString = String(rawId);
+                        const found = tagsList.find(t => t.id_tag === idAsString);
+                        return found ? found.character : null;
+                    })
+                    .filter(Boolean)
+                : [];
+
+            const allMatch = filters.tags.every(charName =>
+                petTagCharacters.includes(charName)
+            );
+            if (!allMatch) {
+                return false;
+            }
+        }
         return true;
     });
 }

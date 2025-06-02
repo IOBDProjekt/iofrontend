@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     Card,
     CardMedia,
@@ -10,24 +10,29 @@ import {
     Chip
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { getImageUrl } from './utils/imageUtils';
+import { getImageUrl } from '../../utils/imageUtils';
+import { makeLookupMap } from '../../utils/lookupUtils';
 
-export default function Pet({ pet, tagsList, onSelect }) {
-    const tagLabels = Array.isArray(pet.tags)
-        ? pet.tags.map(tagId => {
-            const found = tagsList.find(t => t.id_tag === tagId);
-            return found ? found.character : String(tagId);
-        })
+export default function PetItem({ pet = {}, tagsList = [], onSelect }) {
+    const { name = '', id_image, tags = [] } = pet;
+
+    const tagsMap = useMemo(
+        () => makeLookupMap(tagsList, 'id_tag', 'character'),
+        [tagsList]
+    );
+
+    const tagLabels = Array.isArray(tags)
+        ? tags.map(tagId => tagsMap[String(tagId)] || String(tagId))
         : [];
 
     return (
         <Card
             sx={{
                 height: '100%',
-                cursor: 'pointer',
-                position: 'relative',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                cursor: 'pointer',
+                position: 'relative'
             }}
             onClick={() => onSelect(pet)}
         >
@@ -44,8 +49,8 @@ export default function Pet({ pet, tagsList, onSelect }) {
             <Box sx={{ position: 'relative', pt: '56.25%', overflow: 'hidden' }}>
                 <CardMedia
                     component="img"
-                    image={getImageUrl(pet.id_image)}
-                    alt={pet.name}
+                    image={getImageUrl(id_image)}
+                    alt={name}
                     sx={{
                         position: 'absolute',
                         top: 0,
@@ -59,19 +64,18 @@ export default function Pet({ pet, tagsList, onSelect }) {
 
             {/* Zawartość karty */}
             <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" component="div" noWrap>
-                    {pet.name}
+                <Typography variant="h6" noWrap>
+                    {name}
                 </Typography>
 
-                {/* Tagi */}
                 {tagLabels.length > 0 && (
-                    <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ mt: 1, flexWrap: 'wrap' }}
+                    >
                         {tagLabels.map(label => (
-                            <Chip
-                                key={label}
-                                label={label}
-                                size="small"
-                            />
+                            <Chip key={label} label={label} size="small" />
                         ))}
                     </Stack>
                 )}

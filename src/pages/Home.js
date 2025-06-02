@@ -1,35 +1,54 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Grid, Box } from '@mui/material';
 import usePetApi from '../hooks/usePetApi';
-import Pet from '../assets/Pet/Pet';
+import PetItem from '../assets/Pet/PetItem';
 import { PetDialog } from '../assets/Pet/PetDialog';
 import { Loading } from '../assets/Loading';
 import { ErrorDisplay } from '../assets/ErrorDisplay';
 import PetFilter from '../assets/Pet/PetFilter';
 
-import { filterPets } from '../assets/Pet/utils/filterUtils';
 import { usePetFilters } from '../hooks/usePetFilters';
 
 export default function Home() {
-    const { pets: allPets, loading, error, selectedPet, selectPet, clearSelection } = usePetApi();
-    const { filters, setFilters, breeds, speciesList, shelters, tagsList } = usePetFilters();
+    const {
+        pets: allPets,
+        loading: petsLoading,
+        error: petsError,
+        selectedPet,
+        selectPet,
+        clearSelection,
+    } = usePetApi();
 
-    const sexList = useMemo(() => {
-        if (!Array.isArray(allPets)) return [];
-        return Array.from(new Set(allPets.map(pet => pet.sex))).filter(Boolean);
-    }, [allPets]);
+    const {
+        filters,
+        setFilters,
+        breeds,
+        speciesList,
+        shelters,
+        tagsList,
+        sexList,
+        statusList,
+        filteredPets,
+        loading: filtersLoading,
+        error: filtersError,
+    } = usePetFilters(allPets);
 
-    const statusList = useMemo(() => {
-        if (!Array.isArray(allPets)) return [];
-        return Array.from(new Set(allPets.map(pet => pet.status))).filter(Boolean);
-    }, [allPets]);
+    const anyLoading =
+        petsLoading ||
+        filtersLoading.breeds ||
+        filtersLoading.species ||
+        filtersLoading.shelters ||
+        filtersLoading.tags;
 
-    const filteredPets = useMemo(() =>
-        filterPets(allPets, filters),
-        [allPets, filters]);
+    const anyError =
+        petsError ||
+        filtersError.breeds ||
+        filtersError.species ||
+        filtersError.shelters ||
+        filtersError.tags;
 
-    if (loading) return <Loading />;
-    if (error) return <ErrorDisplay message={error} />;
+    if (anyLoading) return <Loading />;
+    if (anyError) return <ErrorDisplay message={String(anyError)} />;
 
     return (
         <Box p={2}>
@@ -47,9 +66,7 @@ export default function Home() {
             <Grid container spacing={2}>
                 {filteredPets.map(pet => (
                     <Grid item key={pet.id_pet} xs={12} sm={6} md={4} lg={3}>
-                        <Pet pet={pet}
-                             tagsList={tagsList}
-                             onSelect={selectPet} />
+                        <PetItem pet={pet} tagsList={tagsList} onSelect={selectPet} />
                     </Grid>
                 ))}
             </Grid>
