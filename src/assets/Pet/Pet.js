@@ -12,13 +12,14 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { getImageUrl } from './utils/imageUtils';
 
-/**
- * Displays a single pet as a card.
- * Props:
- * - pet: the pet object
- * - onSelect: callback when the card is clicked
- */
-export default function Pet({ pet, onSelect }) {
+export default function Pet({ pet, tagsList, onSelect }) {
+    const tagLabels = Array.isArray(pet.tags)
+        ? pet.tags.map(tagId => {
+            const found = tagsList.find(t => t.id_tag === tagId);
+            return found ? found.character : String(tagId);
+        })
+        : [];
+
     return (
         <Card
             sx={{
@@ -30,6 +31,7 @@ export default function Pet({ pet, onSelect }) {
             }}
             onClick={() => onSelect(pet)}
         >
+            {/* Ikona ulubionych */}
             <IconButton
                 sx={{ position: 'absolute', top: 8, right: 8, zIndex: 1 }}
                 aria-label="favorite"
@@ -38,6 +40,7 @@ export default function Pet({ pet, onSelect }) {
                 <FavoriteBorderIcon />
             </IconButton>
 
+            {/* Obraz */}
             <Box sx={{ position: 'relative', pt: '56.25%', overflow: 'hidden' }}>
                 <CardMedia
                     component="img"
@@ -54,17 +57,19 @@ export default function Pet({ pet, onSelect }) {
                 />
             </Box>
 
+            {/* Zawartość karty */}
             <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="div" noWrap>
                     {pet.name}
                 </Typography>
 
-                {pet.tags && pet.tags.length > 0 && (
+                {/* Tagi */}
+                {tagLabels.length > 0 && (
                     <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
-                        {pet.tags.map(tag => (
+                        {tagLabels.map(label => (
                             <Chip
-                                key={tag}
-                                label={tag}
+                                key={label}
+                                label={label}
                                 size="small"
                             />
                         ))}

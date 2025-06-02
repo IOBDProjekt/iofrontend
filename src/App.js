@@ -3,7 +3,6 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import AppRoutes from "./navigation/AppRoutes";
 import Navbar from "./assets/Navbar";
 import { UserProvider } from "./context/UserContext";
-import LandingNavbar from "./assets/LandingNavbar";
 import useHomeLogic from "./pages/HomePageFunctionalities/useHomeLogic";
 
 function AppContent() {

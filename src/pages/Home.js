@@ -14,7 +14,19 @@ export default function Home() {
     const { pets: allPets, loading, error, selectedPet, selectPet, clearSelection } = usePetApi();
     const { filters, setFilters, breeds, speciesList, shelters, tagsList } = usePetFilters();
 
-    const filteredPets = useMemo(() => filterPets(allPets, filters), [allPets, filters]);
+    const sexList = useMemo(() => {
+        if (!Array.isArray(allPets)) return [];
+        return Array.from(new Set(allPets.map(pet => pet.sex))).filter(Boolean);
+    }, [allPets]);
+
+    const statusList = useMemo(() => {
+        if (!Array.isArray(allPets)) return [];
+        return Array.from(new Set(allPets.map(pet => pet.status))).filter(Boolean);
+    }, [allPets]);
+
+    const filteredPets = useMemo(() =>
+        filterPets(allPets, filters),
+        [allPets, filters]);
 
     if (loading) return <Loading />;
     if (error) return <ErrorDisplay message={error} />;
@@ -28,17 +40,28 @@ export default function Home() {
                 speciesList={speciesList}
                 shelters={shelters}
                 tagsList={tagsList}
+                sexList={sexList}
+                statusList={statusList}
             />
 
             <Grid container spacing={2}>
                 {filteredPets.map(pet => (
                     <Grid item key={pet.id_pet} xs={12} sm={6} md={4} lg={3}>
-                        <Pet pet={pet} onSelect={selectPet} />
+                        <Pet pet={pet}
+                             tagsList={tagsList}
+                             onSelect={selectPet} />
                     </Grid>
                 ))}
             </Grid>
 
-            <PetDialog pet={selectedPet} onClose={clearSelection} />
+            <PetDialog
+                pet={selectedPet}
+                breeds={breeds}
+                speciesList={speciesList}
+                shelters={shelters}
+                tagsList={tagsList}
+                onClose={clearSelection}
+            />
         </Box>
     );
 }
