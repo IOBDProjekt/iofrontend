@@ -18,16 +18,28 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
     PaperProps: {
         style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
             width: 250,
         },
     },
 };
 
-const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList }) => {
+const PetFilter = ({
+                       filters,
+                       onChange,
+                       breeds,
+                       shelters,
+                       speciesList,
+                       tagsList,
+                       sexList,
+                       statusList,
+                   }) => {
     const handleInput = (field) => (event) => {
         const value = event.target.value;
-        onChange({ ...filters, [field]: value });
+        onChange({
+            ...filters,
+            [field]: value,
+        });
     };
 
     const handleReset = () => {
@@ -47,6 +59,7 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
     return (
         <Box mb={3} p={2} border={1} borderRadius={2} borderColor="grey.300">
             <Grid container spacing={2} alignItems="flex-end">
+                {/* Imię */}
                 <Grid item xs={12} sm={6} md={3}>
                     <TextField
                         label="Imię"
@@ -55,6 +68,8 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                         fullWidth
                     />
                 </Grid>
+
+                {/* Wiek */}
                 <Grid item xs={6} sm={3} md={2}>
                     <TextField
                         label="Wiek"
@@ -64,6 +79,8 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                         fullWidth
                     />
                 </Grid>
+
+                {/* Stan zdrowia */}
                 <Grid item xs={6} sm={3} md={2}>
                     <TextField
                         label="Stan zdrowia"
@@ -72,6 +89,8 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                         fullWidth
                     />
                 </Grid>
+
+                {/* Rasa (jednokrotny wybór) */}
                 <Grid item xs={6} sm={4} md={2}>
                     <FormControl fullWidth>
                         <InputLabel>Rasa</InputLabel>
@@ -79,14 +98,20 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.id_breed}
                             onChange={handleInput('id_breed')}
                             label="Rasa"
+                            MenuProps={MenuProps}
                         >
                             <MenuItem value="">Dowolna</MenuItem>
-                            {breeds.map(b => (
-                                <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>
-                            ))}
+                            {Array.isArray(breeds) &&
+                                breeds.map((b) => (
+                                    <MenuItem key={b.id_breed} value={b.id_breed}>
+                                        {b.name}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Gatunek (jednokrotny wybór) */}
                 <Grid item xs={6} sm={4} md={2}>
                     <FormControl fullWidth>
                         <InputLabel>Gatunek</InputLabel>
@@ -94,14 +119,20 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.id_species}
                             onChange={handleInput('id_species')}
                             label="Gatunek"
+                            MenuProps={MenuProps}
                         >
                             <MenuItem value="">Dowolny</MenuItem>
-                            {speciesList.map(s => (
-                                <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>
-                            ))}
+                            {Array.isArray(speciesList) &&
+                                speciesList.map((s) => (
+                                    <MenuItem key={s.id_species} value={s.id_species}>
+                                        {s.name}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Schronisko (jednokrotny wybór) */}
                 <Grid item xs={6} sm={4} md={2}>
                     <FormControl fullWidth>
                         <InputLabel>Schronisko</InputLabel>
@@ -109,14 +140,20 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.id_shelter}
                             onChange={handleInput('id_shelter')}
                             label="Schronisko"
+                            MenuProps={MenuProps}
                         >
                             <MenuItem value="">Dowolne</MenuItem>
-                            {shelters.map(s => (
-                                <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>
-                            ))}
+                            {Array.isArray(shelters) &&
+                                shelters.map((s) => (
+                                    <MenuItem key={s.id_shelter} value={s.id_shelter}>
+                                        {s.name}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Płeć (jednokrotny wybór) */}
                 <Grid item xs={6} sm={3} md={2}>
                     <FormControl fullWidth>
                         <InputLabel>Płeć</InputLabel>
@@ -124,13 +161,20 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.sex}
                             onChange={handleInput('sex')}
                             label="Płeć"
+                            MenuProps={MenuProps}
                         >
                             <MenuItem value="">Dowolna</MenuItem>
-                            <MenuItem value="Samiec">Samiec</MenuItem>
-                            <MenuItem value="Samica">Samica</MenuItem>
+                            {Array.isArray(sexList) &&
+                                sexList.map((sexValue) => (
+                                    <MenuItem key={sexValue} value={sexValue}>
+                                        {sexValue}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Status (jednokrotny wybór) */}
                 <Grid item xs={6} sm={3} md={2}>
                     <FormControl fullWidth>
                         <InputLabel>Status</InputLabel>
@@ -138,13 +182,20 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.status}
                             onChange={handleInput('status')}
                             label="Status"
+                            MenuProps={MenuProps}
                         >
                             <MenuItem value="">Dowolny</MenuItem>
-                            <MenuItem value="Do oddania">Do oddania</MenuItem>
-                            <MenuItem value="Adopted">Adopted</MenuItem>
+                            {Array.isArray(statusList) &&
+                                statusList.map((statusValue) => (
+                                    <MenuItem key={statusValue} value={statusValue}>
+                                        {statusValue}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Tagi (wielokrotny wybór) */}
                 <Grid item xs={12} sm={6} md={4}>
                     <FormControl fullWidth>
                         <InputLabel>Tagi</InputLabel>
@@ -153,18 +204,29 @@ const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList 
                             value={filters.tags}
                             onChange={handleInput('tags')}
                             input={<OutlinedInput label="Tagi" />}
-                            renderValue={(selected) => selected.join(', ')}
+                            renderValue={(selectedIds) => {
+                                if (!Array.isArray(selectedIds)) return '';
+                                return selectedIds
+                                    .map(id => {
+                                        const found = tagsList.find(t => t.id_tag === id);
+                                        return found ? found.character : String(id);
+                                    })
+                                    .join(', ');
+                            }}
                             MenuProps={MenuProps}
                         >
-                            {tagsList.map(tag => (
-                                <MenuItem key={tag.id} value={tag.id}>
-                                    <Checkbox checked={filters.tags.includes(tag.id)} />
-                                    <ListItemText primary={tag.name} />
-                                </MenuItem>
-                            ))}
+                            {Array.isArray(tagsList) &&
+                                tagsList.map((tag) => (
+                                    <MenuItem key={tag.id_tag} value={tag.id_tag}>
+                                        <Checkbox checked={filters.tags.includes(tag.id_tag)} />
+                                        <ListItemText primary={tag.character} />
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </Grid>
+
+                {/* Reset */}
                 <Grid item xs={12} sm={6} md={2}>
                     <Button variant="outlined" fullWidth onClick={handleReset}>
                         Resetuj

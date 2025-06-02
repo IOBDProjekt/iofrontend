@@ -25,8 +25,6 @@ export function filterPets(pets, filters) {
 
             const petAge = parseInt(p.age, 10);
             if (isNaN(petAge)) return false;
-
-            const petRange = { min: petAge, max: petAge };
             if (filterRange.min === filterRange.max) {
                 if (petAge !== filterRange.min) return false;
             } else {
@@ -35,12 +33,17 @@ export function filterPets(pets, filters) {
         }
 
         if (filters.condition && p.condition !== filters.condition) return false;
-        if (filters.id_breed && p.id_breed !== filters.id_breed) return false;
-        if (filters.id_species && p.id_species !== filters.id_species) return false;
-        if (filters.id_shelter && p.id_shelter !== filters.id_shelter) return false;
+        if (filters.id_breed && p.id_breed !== Number(filters.id_breed)) return false;
+        if (filters.id_species && p.id_species !== Number(filters.id_species)) return false;
+        if (filters.id_shelter && p.id_shelter !== Number(filters.id_shelter)) return false;
         if (filters.sex && p.sex !== filters.sex) return false;
         if (filters.status && p.status !== filters.status) return false;
-        if (filters.tags.length > 0 && !filters.tags.every(t => p.tags.includes(t))) return false;
+        if (
+            filters.tags.length > 0 &&
+            (!Array.isArray(p.tags) || !filters.tags.every(t => p.tags.includes(t)))
+        ) {
+            return false;
+        }
 
         return true;
     });
