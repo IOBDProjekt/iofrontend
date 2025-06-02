@@ -217,8 +217,8 @@ const PetFilter = ({
                         >
                             {Array.isArray(tagsList) &&
                                 tagsList.map((tag) => (
-                                    <MenuItem key={tag.id_tag} value={tag.id_tag}>
-                                        <Checkbox checked={filters.tags.includes(tag.id_tag)} />
+                                    <MenuItem key={tag.id_tag} value={tag.character}>
+                                        <Checkbox checked={filters.tags.includes(tag.character)} />
                                         <ListItemText primary={tag.character} />
                                     </MenuItem>
                                 ))}

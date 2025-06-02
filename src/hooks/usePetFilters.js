@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import api from '../api.js';
+import { filterPets as filterPetsUtil } from '../utils/filterUtils';
 
-export function usePetFilters() {
+export function usePetFilters(allPets) {
     const [filters, setFilters] = useState({
         name: '',
         age: '',
@@ -11,7 +12,7 @@ export function usePetFilters() {
         id_species: '',
         sex: '',
         status: '',
-        tags: []
+        tags: [],
     });
 
     const [breeds, setBreeds] = useState([]);
@@ -23,14 +24,15 @@ export function usePetFilters() {
         breeds: false,
         species: false,
         shelters: false,
-        tags: false
+        tags: false,
     });
     const [error, setError] = useState({
         breeds: null,
         species: null,
         shelters: null,
-        tags: null
+        tags: null,
     });
+
     const fetchBreeds = async () => {
         setLoading(prev => ({ ...prev, breeds: true }));
         setError(prev => ({ ...prev, breeds: null }));
@@ -40,7 +42,7 @@ export function usePetFilters() {
                 const mapped = response.data.breeds.map(b => ({
                     id_breed: String(b.id_breed),
                     name: b.name,
-                    id_species: b.id_species
+                    id_species: String(b.id_species),
                 }));
                 setBreeds(mapped);
             } else {
@@ -62,7 +64,7 @@ export function usePetFilters() {
             if (Array.isArray(response.data.species)) {
                 const mapped = response.data.species.map(s => ({
                     id_species: String(s.id_species),
-                    name: s.name
+                    name: s.name,
                 }));
                 setSpeciesList(mapped);
             } else {
@@ -104,7 +106,11 @@ export function usePetFilters() {
         try {
             const response = await api.get('/tag');
             if (Array.isArray(response.data.tags)) {
-                setTagsList(response.data.tags);
+                const mapped = response.data.tags.map(t => ({
+                    id_tag: String(t.id_tag),
+                    character: t.character,
+                }));
+                setTagsList(mapped);
             } else {
                 console.warn('Unexpected format from /tag:', response.data);
                 setTagsList([]);
@@ -123,6 +129,22 @@ export function usePetFilters() {
         fetchTags();
     }, []);
 
+    const sexList = useMemo(() => {
+        if (!Array.isArray(allPets)) return [];
+        return Array.from(new Set(allPets.map(pet => pet.sex))).filter(Boolean);
+    }, [allPets]);
+
+    const statusList = useMemo(() => {
+        if (!Array.isArray(allPets)) return [];
+        return Array.from(new Set(allPets.map(pet => pet.status))).filter(Boolean);
+    }, [allPets]);
+
+    const filteredPets = useMemo(() => {
+        if (!Array.isArray(allPets)) return [];
+        return filterPetsUtil(allPets, filters, tagsList);
+        }, [allPets, filters, tagsList]);
+
+
     return {
         filters,
         setFilters,
@@ -130,7 +152,10 @@ export function usePetFilters() {
         speciesList,
         shelters,
         tagsList,
+        sexList,
+        statusList,
+        filteredPets,
         loading,
-        error
+        error,
     };
 }
