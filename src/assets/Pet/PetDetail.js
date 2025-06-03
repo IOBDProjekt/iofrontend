@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRedirect } from '../../navigation/RedirectHandlers';
 import {
     Container,
     Typography,
@@ -12,58 +13,31 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getImageUrl } from '../../utils/imageUtils';
-import { makeLookupMap } from '../../utils/lookupUtils';
 import api from '../../api';
 
 export default function PetDetail() {
     const { id } = useParams();
+    const goBack = useRedirect(-1);
+
     const [pet, setPet] = useState(null);
-    const [breeds, setBreeds] = useState([]);
-    const [speciesList, setSpeciesList] = useState([]);
-    const [shelters, setShelters] = useState([]);
-    const [tagsList, setTagsList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchPet() {
             try {
-                const [petRes, breedsRes, speciesRes, sheltersRes, tagsRes] = await Promise.all([
-                    api.get(`/pet/${id}`),
-                    api.get('/breeds'),
-                    api.get('/species'),
-                    api.get('/shelters'),
-                    api.get('/tags')
-                ]);
-                setPet(petRes.data);
-                setBreeds(breedsRes.data);
-                setSpeciesList(speciesRes.data);
-                setShelters(sheltersRes.data);
-                setTagsList(tagsRes.data);
-            } catch (error) {
-                console.error('Failed to fetch pet data', error);
+                const response = await api.get(`/pet/${id}`);
+                const petData = response.data.pets?.[0] || null;
+                setPet(petData);
+            } catch (err) {
+                console.error('Failed to fetch pet data', err);
+                setError('Nie udało się pobrać danych zwierzaka');
             } finally {
                 setLoading(false);
             }
         }
-        fetchData();
+        fetchPet();
     }, [id]);
-
-    const breedsMap = useMemo(
-        () => makeLookupMap(breeds, 'id_breed', 'name'),
-        [breeds]
-    );
-    const speciesMap = useMemo(
-        () => makeLookupMap(speciesList, 'id_species', 'name'),
-        [speciesList]
-    );
-    const sheltersMap = useMemo(
-        () => makeLookupMap(shelters, 'id_shelter', 'name'),
-        [shelters]
-    );
-    const tagsMap = useMemo(
-        () => makeLookupMap(tagsList, 'id_tag', 'character'),
-        [tagsList]
-    );
 
     if (loading) {
         return (
@@ -73,10 +47,24 @@ export default function PetDetail() {
         );
     }
 
-    if (!pet || !pet.id_pet) {
+    if (error) {
+        return (
+            <Container sx={{ mt: 4 }}>
+                <Typography variant="h5" color="error">{error}</Typography>
+                <Button startIcon={<ArrowBackIcon />} onClick={goBack} sx={{ mt: 2 }}>
+                    Wróć
+                </Button>
+            </Container>
+        );
+    }
+
+    if (!pet) {
         return (
             <Container sx={{ mt: 4 }}>
                 <Typography variant="h5">Nie znaleziono zwierzaka</Typography>
+                <Button startIcon={<ArrowBackIcon />} onClick={goBack} sx={{ mt: 2 }}>
+                    Wróć
+                </Button>
             </Container>
         );
     }
@@ -87,21 +75,16 @@ export default function PetDetail() {
         age,
         sex,
         condition,
-        id_breed,
-        id_species,
-        id_shelter,
         status,
+        breed,
+        species,
+        shelter,
         tags = []
     } = pet;
 
-    const breedName = breedsMap[id_breed] || id_breed;
-    const speciesName = speciesMap[id_species] || id_species;
-    const shelterName = sheltersMap[id_shelter] || id_shelter;
-    const tagLabels = tags.map(tagId => tagsMap[tagId] || tagId);
-
     return (
         <Container sx={{ mt: 4 }}>
-            <Button startIcon={<ArrowBackIcon />} href="/pet/active">
+            <Button startIcon={<ArrowBackIcon />} onClick={goBack}>
                 Wróć do listy zwierząt
             </Button>
 
@@ -118,10 +101,10 @@ export default function PetDetail() {
                 />
             </Box>
 
-            {tagLabels.length > 0 && (
+            {tags.length > 0 && (
                 <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
-                    {tagLabels.map(label => (
-                        <Chip key={label} label={label} />
+                    {tags.map(tag => (
+                        <Chip key={tag.id} label={tag.character} />
                     ))}
                 </Stack>
             )}
@@ -130,9 +113,9 @@ export default function PetDetail() {
                 <Typography><strong>Wiek:</strong> {age}</Typography>
                 <Typography><strong>Płeć:</strong> {sex}</Typography>
                 <Typography><strong>Stan zdrowia:</strong> {condition}</Typography>
-                <Typography><strong>Rasa:</strong> {breedName}</Typography>
-                <Typography><strong>Gatunek:</strong> {speciesName}</Typography>
-                <Typography><strong>Schronisko:</strong> {shelterName}</Typography>
+                <Typography><strong>Rasa:</strong> {breed?.name || '-'}</Typography>
+                <Typography><strong>Gatunek:</strong> {species?.name || '-'}</Typography>
+                <Typography><strong>Schronisko:</strong> {shelter?.name || '-'}</Typography>
                 <Typography><strong>Status:</strong> {status}</Typography>
             </Stack>
         </Container>
