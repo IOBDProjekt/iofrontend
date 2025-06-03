@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
     Card,
     CardMedia,
@@ -10,17 +10,13 @@ import {
     Chip
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useRedirect } from "../../navigation/RedirectHandlers";
+import { useRedirect } from '../../navigation/RedirectHandlers';
 import { getImageUrl } from '../../utils/imageUtils';
-import { makeLookupMap } from '../../utils/lookupUtils';
 
 export default function PetItem({
                                     pet = {},
-                                    tagsList = [],
                                     onFavoriteToggle
                                 }) {
-    const redirectToPet = useRedirect(`/pet/${id_pet}`);
-
     const {
         id_pet,
         name = '',
@@ -28,13 +24,7 @@ export default function PetItem({
         tags = []
     } = pet;
 
-    const tagsMap = useMemo(
-        () => makeLookupMap(tagsList, 'id_tag', 'character'),
-        [tagsList]
-    );
-    const tagLabels = Array.isArray(tags)
-        ? tags.map(tagId => tagsMap[String(tagId)] || String(tagId))
-        : [];
+    const redirectToPet = useRedirect(`/pet/${id_pet}`);
 
     return (
         <Card
@@ -65,10 +55,10 @@ export default function PetItem({
                 <Typography variant="h6" noWrap>
                     {name}
                 </Typography>
-                {tagLabels.length > 0 && (
+                {tags.length > 0 && (
                     <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
-                        {tagLabels.map(label => (
-                            <Chip key={label} label={label} size="small" />
+                        {tags.map((tagObj, index) => (
+                            <Chip key={tagObj.id_tag || index} label={tagObj.character} size="small" />
                         ))}
                     </Stack>
                 )}
