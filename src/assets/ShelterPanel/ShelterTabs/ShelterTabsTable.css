@@ -1,0 +1,123 @@
+.table-container {
+    overflow-x: auto;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding-bottom: 50rem;
+}
+
+.shelter-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.shelter-table th,
+.shelter-table td {
+    padding: 6px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.shelter-table td.shelter-name {
+    width: 200px;
+}
+
+.shelter-table td.shelter-moderator {
+    width: 350px;
+}
+
+.shelter-table th {
+    background-color: #eaeaea;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.shelter-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.shelter-table td {
+    font-size: 0.95rem;
+}
+
+.shelter-tab-content .change-shelter-account {
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+}
+
+.shelter-tab-content .change-shelter-account:hover {
+    text-decoration: underline;
+}
+
+.shelter-tab-content .remove-shelter-account {
+    color: rgb(184, 45, 45);
+    margin-left: 0.55rem;
+}
+
+.shelter-tab-content .assign-shelter-account {
+    color: rgb(60, 171, 56);
+    margin-left: 0;
+}
+
+.shelter-assign-popup {
+    position: absolute;
+    top: 28px;
+    left: -50px;
+    visibility: hidden;
+    background-color: #ffffff;
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    width: 260px;
+    max-height: 250px;
+    overflow-y: auto;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.shelter-assign-popup-active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sheler-moderator-update {
+    position: relative;
+}
+
+.shelter-assign-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shelter-assign-popup li {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.shelter-assign-popup li:last-child {
+    border-bottom: none;
+}
+
+.shelter-assign-popup li:hover {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.shelter-assign-popup ul:empty::after {
+    content: "Brak dostępnych schronisk";
+    display: block;
+    padding: 1rem;
+    color: #999;
+    text-align: center;
+    font-size: 0.9rem;
+}

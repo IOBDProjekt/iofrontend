@@ -1,10 +1,11 @@
 import React from "react";
 import "./ShelterProfile.css";
+import ShelterPanel from "../ShelterPanel/ShelterPanel";
 
 const ShelterProfile = () => {
     return (
         <>
-            <span>Konto schroniska</span>
+            <ShelterPanel />
         </>
     );
 };
