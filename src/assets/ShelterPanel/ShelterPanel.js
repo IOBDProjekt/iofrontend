@@ -8,21 +8,38 @@ import FormsTab from "./ShelterTabs/FormsTab";
 import "./ShelterPanel.css";
 
 const ShelterPanel = () => {
-    const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState(0);
+	const [pets, setPets] = useState([]);
 
-    const tabs = [<PetsTab />, <ChatTab />, <FormsTab />];
+	const fetchAllPets = async () => {
+		try {
+			const id_response = await api.get("/auth/me");
+			const response = await api.get(
+				"/pet/shelter/" + id_response?.data?.id_user,
+			);
+			setPets((prev) => [...response?.data?.pets]);
+		} catch (error) {}
+	};
 
-    useEffect(() => {}, []);
+	const tabs = [
+		<PetsTab pets={pets} updatePets={fetchAllPets} />,
+		<ChatTab />,
+		<FormsTab />,
+	];
 
-    return (
-        <div className="shelter-panel">
-            <aside>
-                <h3>Panel schroniska</h3>
-                <ShelterTabs changeTab={setActiveTab} />
-            </aside>
-            {tabs[activeTab]}
-        </div>
-    );
+	useEffect(() => {
+		fetchAllPets();
+	}, []);
+
+	return (
+		<div className="shelter-panel">
+			<aside>
+				<h3>Panel schroniska</h3>
+				<ShelterTabs changeTab={setActiveTab} />
+			</aside>
+			{tabs[activeTab]}
+		</div>
+	);
 };
 
 export default ShelterPanel;
