@@ -48,7 +48,7 @@ export default function ShelterAccountModal({
 			sex: sex,
 			condition: condition,
 			status: status,
-			tagIDs: tagIDs,
+			tagIDs: tagIDs.filter((t) => t != null),
 			id_image: petInfo?.id_image,
 		};
 		const result = await onSubmit(data, image);
@@ -154,11 +154,17 @@ export default function ShelterAccountModal({
 							onChange={(e) => setCondition(e.target.value)}
 							placeholder="Stan zwierzaka"
 						/>
-						<input
-							value={status}
-							onChange={(e) => setStatus(e.target.value)}
-							placeholder="Status zwierzaka"
-						/>
+						<FormControl fullWidth>
+							<InputLabel id="sex-label">Status Zwierzaka</InputLabel>
+							<Select
+								value={status}
+								onChange={(e) => setStatus(e.target.value)}
+								label="Status Zwierzaka"
+							>
+								<MenuItem value={"Samiec"}>Do oddania</MenuItem>
+								<MenuItem value={"Samica"}>Oddany</MenuItem>
+							</Select>
+						</FormControl>
 						<input
 							type="file"
 							accept="image/*"
