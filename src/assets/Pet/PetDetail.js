@@ -85,27 +85,32 @@ export default function PetDetail() {
                     <img className={styles["pet-image"]} src={getImageUrl(id_image)} alt={pet.name} />
                 </div>
                 <div className={styles["column"]}>
-                    <div className={styles["pet-info"]}>
-                        <p>{pet["name"]}</p>
-                        <p>{pet?.status}</p>
+                    <div className={styles["info-container"]}>
+                        <h4 className={styles.title}>Informacje</h4>
+                        <div className={styles["info-item"]}>
+                            <strong>Imię:</strong> <span>{pet?.name}</span>
+                        </div>
+                        <div className={styles["info-item"]}>
+                            <strong>Status:</strong> {pet?.status}
+                        </div>
                     </div>
                     <div className={styles["button-group"]}>
                         <button>Wniosek o adopcje</button>
                         <button>Dopytaj o szczegóły</button>
                         <button>Dodaj do ulubionych</button>
                     </div>
-                    <div className={styles["shelter-info"]}>
+                    <div className={styles["info-container"]}>
                         <h4 className={styles.title}>Dane schroniska</h4>
-                        <div className={styles["contact-item"]}>
+                        <div className={styles["info-item"]}>
                             <strong>Nazwa:</strong> <span>{pet?.shelter?.name || "-"}</span>
                         </div>
-                        <div className={styles["contact-item"]}>
+                        <div className={styles["info-item"]}>
                             <strong>Telefon:</strong>{" "}
                             <a href={`tel:${pet?.shelter?.number}`} className={styles.phoneLink}>
                                 {pet?.shelter?.number || "-"}
                             </a>
                         </div>
-                        <div className={styles["contact-item"]}>
+                        <div className={styles["info-item"]}>
                             <strong>Email:</strong>{" "}
                             <a href={`mailto:${pet?.shelter?.email}`} className={styles.emailLink}>
                                 {pet?.shelter?.email || "-"}
@@ -113,7 +118,59 @@ export default function PetDetail() {
                         </div>
                     </div>
                 </div>
-                <div className={styles["pet-details"]}>cokolwiek</div>
+                <div className={styles["pet-details"]}>
+                    <div className={styles.attributesBox}>
+                        <h3 className={styles.title}>Szczegółowe informacje</h3>
+                        <table className={styles.attrTable}>
+                            <tbody>
+                                <tr>
+                                    <th>Imię</th>
+                                    <td>{pet.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gatunek</th>
+                                    <td>{pet.species?.name || "-"}</td>
+                                </tr>
+                                <tr>
+                                    <th>Rasa</th>
+                                    <td>{pet.breed?.name || "-"}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wiek</th>
+                                    <td>{pet.age}</td>
+                                </tr>
+                                <tr>
+                                    <th>Płeć</th>
+                                    <td>{pet.sex}</td>
+                                </tr>
+                                <tr>
+                                    <th>Stan zdrowia</th>
+                                    <td>{pet.condition}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        <span
+                                            className={`${styles.status} ${
+                                                pet.status === "Do oddania" ? styles.available : styles.unavailable
+                                            }`}
+                                        >
+                                            {pet.status}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Tagi</th>
+                                    <td className={styles.tags}>
+                                        {pet?.tags.map((tag) => {
+                                            return <span>{tag?.character}</span>;
+                                        })}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -3,6 +3,7 @@
     flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 5rem;
 }
 
 .container > button {
@@ -92,7 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 500px;
+    height: 525px;
     width: 100%;
 }
 
@@ -110,16 +111,13 @@
     filter: brightness(0.7);
 }
 
-.shelter-info {
-    padding: 16px 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-    max-width: 360px;
+.info-container {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
+    width: 100%;
 }
 
-.shelter-info .title {
+.info-container .title {
     margin-bottom: 14px;
     font-weight: 600;
     font-size: 1.25rem;
@@ -128,7 +126,7 @@
     margin-top: 0;
 }
 
-.shelter-info .contact-item {
+.info-container .info-item {
     margin-bottom: 12px;
     font-size: 1rem;
     display: flex;
@@ -136,18 +134,95 @@
     align-items: center;
 }
 
-.shelter-info strong {
+.info-container strong {
     min-width: 80px;
     color: #00796b;
 }
 
-.shelter-info a {
+.info-container a {
     color: #00796b;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.shelter-info a:hover {
+.info-container a:hover {
     color: #004d40;
     text-decoration: underline;
+}
+
+.attributesBox {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: auto;
+}
+
+.title {
+    margin-bottom: 14px;
+    font-weight: 600;
+    font-size: 1.25rem;
+    border-bottom: 2px solid #c4c4c4;
+    padding-bottom: 6px;
+    margin-top: 0;
+    color: #333;
+}
+
+.attrTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attrTable th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #444;
+    width: 40%;
+    border-bottom: 1px solid #ddd;
+    background-color: #03423712;
+}
+
+.attrTable td {
+    padding: 10px 12px;
+    color: #2d2d2d;
+    background-color: transparent;
+    border-bottom: 1px solid #ddd;
+}
+
+.attrTable tr:last-child td,
+.attrTable tr:last-child th {
+    border-bottom: none;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.available {
+    background-color: #d9fce4;
+    color: #007a3d;
+}
+
+.unavailable {
+    background-color: #ffe4e4;
+    color: #b20000;
+}
+
+.tags {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.tags > span {
+    display: inline-block;
+    padding: 4px 0.65rem;
+    margin: 4px 4px 0 0;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: #e0f0ff;
+    color: #1a73e8;
 }
