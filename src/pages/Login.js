@@ -9,6 +9,7 @@ export default function Login() {
     const handleRedirectToProfile = useRedirect("/profile");
 
     const successLogin = (userData) => {
+        console.log(userData);
         handleRedirectToProfile();
         loginUser(userData);
     };
