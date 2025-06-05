@@ -84,7 +84,7 @@ export default function Navbar({ favorites = [], allPosts = [], toggleFavorite }
                 )}
                 {userStatus && (
                     <button className={"nav-button"} onClick={() => navigate("/profile")}>
-                        Profil
+                        Twój Profil
                     </button>
                 )}
                 {userStatus && (
