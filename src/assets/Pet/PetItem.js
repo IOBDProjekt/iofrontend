@@ -25,6 +25,7 @@ export default function PetItem({
     } = pet;
 
     const redirectToPet = useRedirect(`/pet/${id_pet}`);
+    console.log('Loading image from:', getImageUrl(id_image));
 
     return (
         <Card
@@ -47,7 +48,15 @@ export default function PetItem({
                     component="img"
                     image={getImageUrl(id_image)}
                     alt={name}
-                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        backgroundColor: '#f0f0f0',
+                    }}
                 />
             </Box>
 
