@@ -4,9 +4,9 @@ import api from "../../api";
 import ShelterTabs from "./ShelterTabs";
 import PetsTab from "./ShelterTabs/PetsTab";
 import ChatTab from "./ShelterTabs/ChatTab";
-import FormsTab from "./ShelterTabs/FormsTab";
 import "./ShelterPanel.css";
 import "./ShelterTabs/ShelterTabsTable.css";
+import AdoptionFormsTab from "./ShelterTabs/AdoptionFormsTab";
 
 const ShelterPanel = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -20,7 +20,7 @@ const ShelterPanel = () => {
         } catch (error) {}
     };
 
-    const tabs = [<PetsTab pets={pets} updatePets={fetchAllPets} />, <ChatTab />, <FormsTab />];
+    const tabs = [<PetsTab pets={pets} updatePets={fetchAllPets} />, <ChatTab />, <AdoptionFormsTab />];
 
     useEffect(() => {
         fetchAllPets();

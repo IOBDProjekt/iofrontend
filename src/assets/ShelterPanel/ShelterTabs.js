@@ -1,7 +1,7 @@
 import React from "react";
 
 const ShelterTabs = ({ changeTab }) => {
-    const tabs = ["Ogłoszenia", "Czat", "Zgłoszenia"];
+    const tabs = ["Ogłoszenia", "Czat", "Wnioski o adopcje"];
 
     return (
         <ul className="shelter-tabs">

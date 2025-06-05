@@ -27,7 +27,6 @@ const AdminPanel = () => {
     };
 
     const tabs = [
-        <UsersTab />,
         <ShelterAccountsTab accounts={shelterAccounts} updateAccounts={fetchAllShelterAccount} />,
         <SheltersTab
             shelters={shelters}
