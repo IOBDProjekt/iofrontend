@@ -121,3 +121,17 @@
     text-align: center;
     font-size: 0.9rem;
 }
+
+.shelter-tab-pet-image img {
+    border-radius: 18px;
+    object-fit: cover;
+    will-change: transform;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.shelter-tab-pet-image img:hover {
+    filter: brightness(0.95);
+    transform: scale(1.05);
+    z-index: 2;
+}

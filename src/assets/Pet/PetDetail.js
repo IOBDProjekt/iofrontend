@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useRedirect } from '../../navigation/RedirectHandlers';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useRedirect } from "../../navigation/RedirectHandlers";
 import {
     Container,
     Typography,
@@ -10,13 +10,15 @@ import {
     CircularProgress,
     CardMedia,
     Button,
-    IconButton
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { getImageUrl } from '../../utils/imageUtils';
-import api from '../../api';
+    IconButton,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { getImageUrl } from "../../utils/imageUtils";
+import api from "../../api";
+
+import styles from "./Pet.module.css";
 
 export default function PetDetail() {
     const { id } = useParams();
@@ -34,8 +36,8 @@ export default function PetDetail() {
                 const petData = response.data.pets?.[0] || null;
                 setPet(petData);
             } catch (err) {
-                console.error('Failed to fetch pet data', err);
-                setError('Nie udało się pobrać danych zwierzaka');
+                console.error("Failed to fetch pet data", err);
+                setError("Nie udało się pobrać danych zwierzaka");
             } finally {
                 setLoading(false);
             }
@@ -45,7 +47,7 @@ export default function PetDetail() {
 
     if (loading) {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
                 <CircularProgress />
             </Box>
         );
@@ -54,8 +56,8 @@ export default function PetDetail() {
     if (error || !pet) {
         return (
             <Container sx={{ mt: 4 }}>
-                <Typography variant="h5" color={error ? 'error' : 'textPrimary'}>
-                    {error || 'Nie znaleziono zwierzaka'}
+                <Typography variant="h5" color={error ? "error" : "textPrimary"}>
+                    {error || "Nie znaleziono zwierzaka"}
                 </Typography>
                 <Button startIcon={<ArrowBackIcon />} onClick={goBack} sx={{ mt: 2 }}>
                     Wróć
@@ -64,87 +66,55 @@ export default function PetDetail() {
         );
     }
 
-    const {
-        name,
-        id_image,
-        age,
-        sex,
-        condition,
-        status,
-        breed,
-        species,
-        shelter,
-        tags = []
-    } = pet;
+    const { id_image, tags = [] } = pet;
 
     const handleFavorite = (e) => {
         e.stopPropagation();
-        setFavorite(prev => !prev);
+        setFavorite((prev) => !prev);
         // TODO: add favorite persistence
-        console.log('Favorite toggled:', !favorite);
+        console.log("Favorite toggled:", !favorite);
     };
 
     return (
-        <Container sx={{ mt: 4 }}>
+        <div className={styles["container"]}>
             <Button startIcon={<ArrowBackIcon />} onClick={goBack}>
                 Wróć do listy zwierząt
             </Button>
-
-            <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>
-                {name}
-            </Typography>
-
-            {/* Main layout: left column with image/data, right column with buttons */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    mb: 3
-                }}
-            >
-                {/* Left column: image, tags, data, favorite icon */}
-                <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <IconButton
-                        onClick={handleFavorite}
-                        sx={{ position: 'absolute', top: 8, right: 8, zIndex: 1 }}
-                    >
-                        {favorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
-                    </IconButton>
-
-                    <CardMedia
-                        component="img"
-                        image={getImageUrl(id_image)}
-                        alt={name}
-                        sx={{ width: 300, height: 'auto', mb: 2 }}
-                    />
-
-                    {tags.length > 0 && (
-                        <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
-                            {tags.map(tag => (
-                                <Chip key={tag.id} label={tag.character} />
-                            ))}
-                        </Stack>
-                    )}
-
-                    <Stack spacing={1} sx={{ lineHeight: 1.6 }}>
-                        <Typography><strong>Wiek:</strong> {age}</Typography>
-                        <Typography><strong>Płeć:</strong> {sex}</Typography>
-                        <Typography><strong>Stan zdrowia:</strong> {condition}</Typography>
-                        <Typography><strong>Rasa:</strong> {breed?.name || '-'}</Typography>
-                        <Typography><strong>Gatunek:</strong> {species?.name || '-'}</Typography>
-                        <Typography><strong>Schronisko:</strong> {shelter?.name || '-'}</Typography>
-                        <Typography><strong>Status:</strong> {status}</Typography>
-                    </Stack>
-                </Box>
-
-                {/* Right column: message/adopt buttons */}
-                <Stack direction="column" spacing={2} alignItems="flex-end">
-                    <Button variant="contained">Wyślij wiadomość</Button>
-                    <Button variant="contained">Adoptuj</Button>
-                </Stack>
-            </Box>
-        </Container>
+            <div className={styles["wrapper"]}>
+                <div className={styles["image-container"]}>
+                    <img className={styles["pet-image"]} src={getImageUrl(id_image)} alt={pet.name} />
+                </div>
+                <div className={styles["column"]}>
+                    <div className={styles["pet-info"]}>
+                        <p>{pet["name"]}</p>
+                        <p>{pet?.status}</p>
+                    </div>
+                    <div className={styles["button-group"]}>
+                        <button>Wniosek o adopcje</button>
+                        <button>Dopytaj o szczegóły</button>
+                        <button>Dodaj do ulubionych</button>
+                    </div>
+                    <div className={styles["shelter-info"]}>
+                        <h4 className={styles.title}>Dane schroniska</h4>
+                        <div className={styles["contact-item"]}>
+                            <strong>Nazwa:</strong> <span>{pet?.shelter?.name || "-"}</span>
+                        </div>
+                        <div className={styles["contact-item"]}>
+                            <strong>Telefon:</strong>{" "}
+                            <a href={`tel:${pet?.shelter?.number}`} className={styles.phoneLink}>
+                                {pet?.shelter?.number || "-"}
+                            </a>
+                        </div>
+                        <div className={styles["contact-item"]}>
+                            <strong>Email:</strong>{" "}
+                            <a href={`mailto:${pet?.shelter?.email}`} className={styles.emailLink}>
+                                {pet?.shelter?.email || "-"}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles["pet-details"]}>cokolwiek</div>
+            </div>
+        </div>
     );
 }
