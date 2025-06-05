@@ -7,6 +7,7 @@ import Profile from "../pages/Profile";
 import Landing from "../pages/Landing";
 import VetAdvice from "../pages/VetAdvice";
 import ResetPassword from "../pages/ResetPassword";
+import RegisterShelter from "../assets/RegisterForm/ShelterRegister"
 
 function AppRoutes() {
     return (
@@ -18,6 +19,7 @@ function AppRoutes() {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/advice" element={<VetAdvice />} />
+            <Route path="/register-shelter" element={<RegisterShelter />} />
         </Routes>
     );
 }
