@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useRedirect } from "../navigation/RedirectHandlers";
+import React from "react";
 import EmailForm from "../assets/EmailForm/EmailForm";
 import { useSearchParams } from "react-router-dom";
 

@@ -1,42 +1,43 @@
-import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
-import { useRedirect } from '../navigation/RedirectHandlers';
+import React from "react";
+import { Box, Typography, Button } from "@mui/material";
+import { useRedirect } from "../navigation/RedirectHandlers";
 
 export default function Landing() {
-    const handleRedirectToHome = useRedirect('/home');
+    const handleRedirectToHome = useRedirect("/home");
 
     return (
         <Box
             sx={{
-                display: 'flex',
-                height: '100vh',
-                width: '100vw',
-                overflow: 'hidden',
+                display: "flex",
+                height: "calc(100vh - 72.5px)",
+                overflow: "hidden",
                 padding: 0,
-                margin: 0
+                margin: 0,
             }}
         >
             {/* Lewa strona - Tekst i przycisk */}
-            <Box sx={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 4,
-                backgroundColor: '#f5f5f5',
-                zIndex: 1
-            }}>
+            <Box
+                sx={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "hidden",
+                    padding: 4,
+                    zIndex: 1,
+                }}
+            >
                 <Typography
                     variant="h1"
                     sx={{
-                        fontSize: '7rem',
-                        fontWeight: 'bold',
-                        color: '#4CAF50',
-                        marginBottom: '2rem',
-                        textAlign: 'center',
+                        fontSize: "3.8rem",
+                        fontWeight: "bold",
+                        color: "#4CAF50",
+                        marginBottom: "2rem",
+                        textAlign: "center",
                         lineHeight: 1.1,
-                        fontFamily: '"Times New Roman", cursive, "Roboto", "Helvetica", "Arial", sans-serif' // Nowa czcionka
+                        fontFamily: '"Poppins", sans-serif',
                     }}
                 >
                     Szczęśliwe Łapki
@@ -45,14 +46,15 @@ export default function Landing() {
                 <Typography
                     variant="h3"
                     sx={{
-                        color: '#333',
-                        marginBottom: '3rem',
-                        textTransform: 'capitalize',
-                        textAlign: 'center',
-                        fontWeight: 500
+                        color: "#333",
+                        marginBottom: "2.7rem",
+                        fontSize: "2.2rem",
+                        textAlign: "center",
+                        fontWeight: 500,
+                        fontFamily: '"Poppins", sans-serif',
                     }}
                 >
-                    Znajdź I Pokochaj Pupila
+                    Znajdź i Pokochaj Pupila
                 </Typography>
 
                 <Button
@@ -61,14 +63,14 @@ export default function Landing() {
                     sx={{
                         px: 8,
                         py: 2,
-                        fontSize: '1.5rem',
-                        backgroundColor: '#67AE6E',
-                        color: '#fff',
-                        '&:hover': {
-                            backgroundColor: '#26A69A',
+                        fontSize: "1.5rem",
+                        backgroundColor: "#67AE6E",
+                        color: "#fff",
+                        "&:hover": {
+                            backgroundColor: "#26A69A",
                         },
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                        borderRadius: "12px",
+                        boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     }}
                 >
                     Wejdź
@@ -76,23 +78,25 @@ export default function Landing() {
             </Box>
 
             {/* Prawa strona - Zdjęcie psa */}
-            <Box sx={{
-                flex: 1,
-                position: 'relative',
-                height: '100vh'
-            }}>
+            <Box
+                sx={{
+                    flex: 1,
+                    position: "relative",
+                    height: "100vh",
+                }}
+            >
                 <Box
                     component="img"
                     src="/landingpagephoto.png"
                     alt="Szczęśliwy pies"
                     sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         top: 0,
                         left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center'
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center",
                     }}
                 />
             </Box>

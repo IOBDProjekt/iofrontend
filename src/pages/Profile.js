@@ -6,16 +6,14 @@ import AdminProfile from "../assets/Profiles/AdminProfile";
 import api from "../api";
 
 export default function Profile() {
-    const { user, setUser } = useUser();
+    const { user, setUser, loginUser } = useUser();
     const [profile, setProfile] = useState(user);
     const [error, setError] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         if (!token) {
-            setError(
-                "Brak tokena autoryzacyjnego. Zaloguj się, aby zobaczyć profil."
-            );
+            setError("Brak tokena autoryzacyjnego. Zaloguj się, aby zobaczyć profil.");
             return;
         }
 
@@ -29,6 +27,7 @@ export default function Profile() {
                 });
 
                 setProfile(response.data);
+                loginUser(response.data);
             } catch (error) {
                 setError(error);
             }
@@ -47,7 +46,7 @@ export default function Profile() {
 
     switch (profile.role) {
         case "user":
-            return <UserProfile />;
+            return <UserProfile user={user} />;
         case "shelter":
             return <ShelterProfile />;
         case "admin":

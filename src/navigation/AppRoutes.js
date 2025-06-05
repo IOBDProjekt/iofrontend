@@ -5,9 +5,10 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Landing from "../pages/Landing";
-import VetAdvice from "../pages/VetAdvice";
 import ResetPassword from "../pages/ResetPassword";
 import RegisterShelter from "../assets/RegisterForm/ShelterRegister"
+import PetDetail from "../assets/Pet/PetDetail";
+import Advices from "../pages/Advices";
 
 function AppRoutes() {
     return (
@@ -20,6 +21,8 @@ function AppRoutes() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/advice" element={<VetAdvice />} />
             <Route path="/register-shelter" element={<RegisterShelter />} />
+            <Route path="/advice" element={<Advices />} />
+            <Route path="/pet/:id" element={<PetDetail />} />
         </Routes>
     );
 }

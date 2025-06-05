@@ -1,0 +1,111 @@
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    padding-bottom: 30rem;
+}
+
+.container > div {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #222;
+    font-weight: 600;
+}
+
+.user-city {
+    color: #555;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.user-email {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.user-email:hover {
+    text-decoration: underline;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #222;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.8rem;
+    margin: 0;
+}
+
+.empty-favourites {
+    font-size: 1rem;
+    color: #222;
+    font-weight: 600;
+    padding-bottom: 0.8rem;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.fav-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.fav-item span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.fav-item a {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.fav-item a:hover {
+    text-decoration: underline;
+}
+
+.favourites {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
