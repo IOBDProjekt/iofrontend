@@ -1,7 +1,7 @@
 import React from "react";
 
 const AdminTabs = ({ changeTab }) => {
-    const tabs = ["Konta Schronisk", "Schroniska"];
+    const tabs = ["Aplikacje", "Konta Schronisk", "Schroniska"];
 
     return (
         <ul className="admin-tabs">
