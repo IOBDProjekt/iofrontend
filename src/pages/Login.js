@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRedirect } from "../navigation/RedirectHandlers";
 import { useUser } from "../context/UserContext";
 import LoginForm from "../assets/LoginForm/LoginForm";
@@ -9,6 +9,7 @@ export default function Login() {
     const handleRedirectToProfile = useRedirect("/profile");
 
     const successLogin = (userData) => {
+        console.log(userData);
         handleRedirectToProfile();
         loginUser(userData);
     };
