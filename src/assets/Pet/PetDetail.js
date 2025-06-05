@@ -18,6 +18,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { getImageUrl } from "../../utils/imageUtils";
 import api from "../../api";
 
+import { useUser } from "../../context/UserContext";
+
 import styles from "./Pet.module.css";
 
 export default function PetDetail() {
@@ -35,6 +37,15 @@ export default function PetDetail() {
                 const response = await api.get(`/pet/${id}`);
                 const petData = response.data.pets?.[0] || null;
                 setPet(petData);
+
+                const fetchUser = await api.get("/auth/me");
+
+                const favCheckResult = await api.post("/favourite/check", {
+                    id_pet: response.data.pets[0].id_pet,
+                    id_user: fetchUser.data["id_user"],
+                });
+
+                setFavorite(favCheckResult.data.result);
             } catch (err) {
                 console.error("Failed to fetch pet data", err);
                 setError("Nie udało się pobrać danych zwierzaka");
@@ -68,11 +79,20 @@ export default function PetDetail() {
 
     const { id_image, tags = [] } = pet;
 
-    const handleFavorite = (e) => {
-        e.stopPropagation();
-        setFavorite((prev) => !prev);
-        // TODO: add favorite persistence
-        console.log("Favorite toggled:", !favorite);
+    const handleAddFavourite = async () => {
+        try {
+            const response = await api.post("/favourite", {
+                id_pet: pet["id_pet"],
+            });
+            setFavorite(true);
+        } catch (error) {}
+    };
+
+    const handleRemoveFavourite = async () => {
+        try {
+            const response = await api.delete(`/favourite/${pet["id_pet"]}`);
+            setFavorite(false);
+        } catch (error) {}
     };
 
     return (
@@ -97,7 +117,11 @@ export default function PetDetail() {
                     <div className={styles["button-group"]}>
                         <button>Wniosek o adopcje</button>
                         <button>Dopytaj o szczegóły</button>
-                        <button>Dodaj do ulubionych</button>
+                        {favorite === true ? (
+                            <button onClick={handleRemoveFavourite}>Usuń z ulubionych</button>
+                        ) : (
+                            <button onClick={handleAddFavourite}>Dodaj do ulubionych</button>
+                        )}
                     </div>
                     <div className={styles["info-container"]}>
                         <h4 className={styles.title}>Dane schroniska</h4>
@@ -162,7 +186,7 @@ export default function PetDetail() {
                                 <tr>
                                     <th>Tagi</th>
                                     <td className={styles.tags}>
-                                        {pet?.tags.map((tag) => {
+                                        {tags.map((tag) => {
                                             return <span>{tag?.character}</span>;
                                         })}
                                     </td>

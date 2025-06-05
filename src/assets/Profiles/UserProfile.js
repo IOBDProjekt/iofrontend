@@ -9,7 +9,7 @@ import ChatWindow from "../Chat/ChatWindow";
 const UserProfile = () => {
     const { user } = useUser();
     const [userData, setUserData] = useState({});
-    const [favourites, setFavouries] = useState([]);
+    const [favourites, setFavourites] = useState([]);
 
     const [conversations, setConversations] = useState([]);
     const [activeConversation, setActiveConversation] = useState(null);
@@ -50,13 +50,14 @@ const UserProfile = () => {
         setUserData(user);
     }, [user]);
 
-    const fetchFavourites = async () => {
-        try {
-            const response = await api.get("/favourite");
-        } catch (error) {}
-    };
-
     useEffect(() => {
+        const fetchFavourites = async () => {
+            try {
+                const response = await api.get("/favourite");
+                setFavourites(response.data.favourites);
+            } catch (error) {}
+        };
+
         fetchFavourites();
     }, []);
 
@@ -78,7 +79,16 @@ const UserProfile = () => {
             <div>
                 <h3 className={styles["card-title"]}>Polubione ogłoszenia</h3>
                 {favourites.length > 0 ? (
-                    <div className={styles["favourites"]}></div>
+                    <div className={styles["favourites"]}>
+                        {favourites.map((fav) => {
+                            return (
+                                <div key={fav.id_favourite} className={styles["fav-item"]}>
+                                    <span>{fav.pet?.name}</span>
+                                    <a href={`/pet/${fav.pet?.id_pet}`}>Zobacz ogłoszenie</a>
+                                </div>
+                            );
+                        })}
+                    </div>
                 ) : (
                     <h4 className={styles["empty-favourites"]}>Brak polubionych ogłoszeń</h4>
                 )}
