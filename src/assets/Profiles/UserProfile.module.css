@@ -4,6 +4,7 @@
     display: flex;
     gap: 2rem;
     flex-direction: column;
+    padding-bottom: 30rem;
 }
 
 .container > div {

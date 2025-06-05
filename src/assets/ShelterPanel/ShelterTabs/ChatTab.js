@@ -10,17 +10,14 @@ const ChatTab = () => {
     const { user } = useUser();
     const userId = Number(user?.id_user);
 
-    console.log(user);
-
     useEffect(() => {
         if (!userId) return;
         const fetchConversations = async () => {
             try {
-                
                 const res = await api.get("/message/me");
                 const data = res.data.messages;
 
-                const formatted = data.map(conv => {
+                const formatted = data.map((conv) => {
                     const isSender = Number(conv.id_sender) === userId;
 
                     return {
@@ -28,7 +25,7 @@ const ChatTab = () => {
                         petName: conv.petName,
                         conversation_with: isSender ? conv.id_receiver : conv.id_sender,
                         conversation_with_name: isSender ? conv.receiverName : conv.senderName,
-                        lastMessageSentAt: conv.lastMessageSentAt
+                        lastMessageSentAt: conv.lastMessageSentAt,
                     };
                 });
 
@@ -53,10 +50,7 @@ const ChatTab = () => {
             />
             <div style={{ flex: 1 }}>
                 {activeConversation ? (
-                    <ChatWindow
-                        conversation={activeConversation}
-                        currentUser={userId}
-                    />
+                    <ChatWindow conversation={activeConversation} currentUser={userId} />
                 ) : (
                     <p style={{ padding: 20 }}> Wybierz rozmowę z listy</p>
                 )}

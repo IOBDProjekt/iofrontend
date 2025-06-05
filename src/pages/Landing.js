@@ -9,8 +9,7 @@ export default function Landing() {
         <Box
             sx={{
                 display: "flex",
-                height: "100vh",
-                width: "100vw",
+                height: "calc(100vh - 72.5px)",
                 overflow: "hidden",
                 padding: 0,
                 margin: 0,
