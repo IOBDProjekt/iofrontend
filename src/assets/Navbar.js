@@ -1,89 +1,54 @@
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import MenuIcon from "@mui/icons-material/Menu";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Badge from "@mui/material/Badge";
-import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import ViewPetModal from "../pages/HomePageFunctionalities/ViewPetModal"; // Upewnij się, że ścieżka jest poprawna
 import { useUser } from "../context/UserContext";
+import {useRedirect} from "../navigation/RedirectHandlers";
 
-export default function Navbar({ favorites = [], allPosts = [], toggleFavorite }) {
-    const navigate = useNavigate();
+export default function Navbar() {
 
-    const handleRedirectToAdvice = () => navigate("/advice");
-    const handleRedirectToFavoritesPage = () => navigate("/favorites");
+    const handleRedirectToLanding = useRedirect('/');
+    const handleRedirectToLogin = useRedirect('/login');
+    const handleRedirectToRegister = useRedirect('/register');
+    const handleRedirectToHome = useRedirect('/home');
+    const handleRedirectToAdvice = useRedirect('/advice');
+    const handleRedirectToProfile = useRedirect('/profile');
+
     const { user, logoutUser, isUserLoggedIn } = useUser();
-
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElFavorites, setAnchorElFavorites] = React.useState(null);
-
-    const [openFavoriteViewModal, setOpenFavoriteViewModal] = useState(false);
-    const [selectedFavoritePet, setSelectedFavoritePet] = useState(null);
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleOpenFavoritesMenu = (event) => {
-        setAnchorElFavorites(event.currentTarget);
-    };
-
-    const handleCloseFavoritesMenu = () => {
-        setAnchorElFavorites(null);
-    };
 
     const handleLogout = () => {
         logoutUser();
         localStorage.removeItem("authToken");
-        navigate("/");
-    };
-
-    const favoritePets = allPosts.filter((post) => favorites.includes(post.id));
-
-    const handleFavoriteItemClick = (pet) => {
-        setSelectedFavoritePet(pet);
-        setOpenFavoriteViewModal(true);
-        handleCloseFavoritesMenu();
-    };
-
-    const handleCloseFavoriteViewModal = () => {
-        setOpenFavoriteViewModal(false);
-        setSelectedFavoritePet(null);
+        handleRedirectToLanding();
     };
 
     const userStatus = isUserLoggedIn();
 
     return (
         <header className={"app-bar"}>
-            <h2 className={"nav-title"} onClick={() => navigate("/")}>
+            <h2 className={"nav-title"} onClick={handleRedirectToLanding}>
                 Szczęśliwe Łapki
             </h2>
             <div className={"nav-buttons-container"}>
                 {!userStatus && (
-                    <button className={"nav-button"} onClick={() => navigate("/login")}>
+                    <button className={"nav-button"} onClick={handleRedirectToLogin}>
                         Zaloguj się
                     </button>
                 )}
                 {!userStatus && (
-                    <button className={"nav-button"} onClick={() => navigate("/register")}>
+                    <button className={"nav-button"} onClick={handleRedirectToRegister}>
                         Rejestracja
                     </button>
                 )}
                 {userStatus && (
-                    <button className={"nav-button"} onClick={() => navigate("/profile")}>
+                    <button className={"nav-button"} onClick={handleRedirectToHome}>
+                        Ogłoszenia
+                    </button>
+                )}
+                {userStatus && (
+                    <button className={"nav-button"} onClick={handleRedirectToAdvice}>
+                        Porady
+                    </button>
+                )}
+                {userStatus && (
+                    <button className={"nav-button"} onClick={handleRedirectToProfile}>
                         Profil
                     </button>
                 )}
