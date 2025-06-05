@@ -67,13 +67,13 @@ const UserProfile = () => {
                 <div className={styles["avatar"]}>{userData?.firstname?.charAt(0).toUpperCase()}</div>
                 <div className={styles["user-info"]}>
                     <h2 className={styles["user-name"]}>
-                        {userData.firstname} {userData.lastname} &lt;
-                        <a href={`mailto:${userData.email}`} className={styles["user-email"]}>
-                            {userData.email}
+                        {userData?.firstname} {userData?.lastname} &lt;
+                        <a href={`mailto:${userData?.email}`} className={styles["user-email"]}>
+                            {userData?.email}
                         </a>
                         &gt;
                     </h2>
-                    <p className={styles["user-city"]}>{userData.city}</p>
+                    <p className={styles["user-city"]}>{userData?.city}</p>
                 </div>
             </div>
             <div>

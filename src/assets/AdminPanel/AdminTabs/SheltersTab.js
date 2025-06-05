@@ -89,12 +89,17 @@ const SheltersTab = ({ shelters, updateShelters, accounts, updateAccounts }) => 
                         Dodaj
                     </p>
                     <div
-                        className={`shelter-assign-popup ${activeShelterID === shelter["id_shelter"] ? "shelter-assign-popup-active" : ""}`}
+                        className={`shelter-assign-popup ${
+                            activeShelterID === shelter["id_shelter"] ? "shelter-assign-popup-active" : ""
+                        }`}
                     >
                         <ul>
                             {accounts.map((account, index) => (
-                                <li key={index} onClick={() => handleAssignModerator(shelter["id_shelter"], account["id_user"])}>
-                                    {account["firstname"]} {account["lastname"]}
+                                <li
+                                    key={index}
+                                    onClick={() => handleAssignModerator(shelter["id_shelter"], account["id_user"])}
+                                >
+                                    {account?.firstname} {account?.lastname}
                                 </li>
                             ))}
                         </ul>
