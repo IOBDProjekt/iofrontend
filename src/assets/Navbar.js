@@ -11,7 +11,7 @@ export default function Navbar() {
     const handleRedirectToAdvice = useRedirect('/advice');
     const handleRedirectToProfile = useRedirect('/profile');
 
-    const { user, logoutUser, isUserLoggedIn } = useUser();
+    const {logoutUser, isUserLoggedIn } = useUser();
 
     const handleLogout = () => {
         logoutUser();

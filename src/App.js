@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 import AppRoutes from "./navigation/AppRoutes";
 import Navbar from "./assets/Navbar";
 import { UserProvider } from "./context/UserContext";

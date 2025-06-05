@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
+import { Box, Typography, Button} from '@mui/material';
 import { useRedirect } from '../navigation/RedirectHandlers';
 
 export default function Landing() {
@@ -24,7 +24,6 @@ export default function Landing() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: 4,
-                backgroundColor: '#f5f5f5',
                 zIndex: 1
             }}>
                 <Typography
@@ -36,7 +35,7 @@ export default function Landing() {
                         marginBottom: '2rem',
                         textAlign: 'center',
                         lineHeight: 1.1,
-                        fontFamily: '"Times New Roman", cursive, "Roboto", "Helvetica", "Arial", sans-serif' // Nowa czcionka
+                        fontFamily: '"Poppins", sans-serif'
                     }}
                 >
                     Szczęśliwe Łapki
@@ -47,12 +46,12 @@ export default function Landing() {
                     sx={{
                         color: '#333',
                         marginBottom: '3rem',
-                        textTransform: 'capitalize',
                         textAlign: 'center',
-                        fontWeight: 500
+                        fontWeight: 500,
+                        fontFamily: '"Poppins", sans-serif'
                     }}
                 >
-                    Znajdź I Pokochaj Pupila
+                    Znajdź i Pokochaj Pupila
                 </Typography>
 
                 <Button
