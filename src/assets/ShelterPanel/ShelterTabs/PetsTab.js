@@ -59,13 +59,23 @@ const PetsTab = ({ pets, updatePets, shelterId }) => {
                 const formData = new FormData();
                 formData.append("image", image);
 
-                await api.put("/image/" + petData.id_image, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                });
+                if (petData.id_image !== null) {
+                    await api.put("/image/" + petData.id_image, formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                } else {
+                    const imageResponse = await api.post("/image", formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+
+                    const newImageId = imageResponse.data.id_image;
+
+                    await api.put("/pet/" + petData.id_pet, { id_image: newImageId });
+                }
+
                 setImageVersion((prev) => prev + 1);
             }
+
 
             setModalErrors([]);
             updatePets();
