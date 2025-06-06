@@ -190,27 +190,6 @@ const PetFilter = ({
                             </FormControl>
                         </Grid>
 
-                        {/* Status (jednokrotny wybór) */}
-                        <Grid item xs={6} sm={3} md={2}>
-                            <FormControl fullWidth>
-                                <InputLabel>Status</InputLabel>
-                                <Select
-                                    value={filters.status}
-                                    onChange={handleInput('status')}
-                                    label="Status"
-                                    MenuProps={MenuProps}
-                                >
-                                    <MenuItem value="">Dowolny</MenuItem>
-                                    {Array.isArray(statusList) &&
-                                        statusList.map((statusValue) => (
-                                            <MenuItem key={statusValue} value={statusValue}>
-                                                {statusValue}
-                                            </MenuItem>
-                                        ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-
                         {/* Tagi (wielokrotny wybór) */}
                         <Grid item xs={12} sm={6} md={4}>
                             <FormControl fullWidth>
