@@ -18,6 +18,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getImageUrl } from "../../utils/imageUtils";
 import api from "../../api";
 
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+
 import { useUser } from "../../context/UserContext";
 
 import styles from "./Pet.module.css";
@@ -46,6 +48,10 @@ export default function PetDetail() {
 
     const [user, setUser] = useState(null);
 
+    const [showMessageModal, setShowMessageModal] = useState(false);
+    const [initialMessage, setInitialMessage] = useState("");
+
+
     useEffect(() => {
         async function fetchPet() {
             try {
@@ -71,6 +77,27 @@ export default function PetDetail() {
         }
         fetchPet();
     }, [id]);
+
+    const handleSendInitialMessage = async () => {
+        if (!initialMessage.trim()) {
+            alert("Wiadomość nie może być pusta.");
+            return;
+        }
+
+        try {
+            await api.post("/message", {
+                id_receiver: pet.shelter.id_user,
+                content: initialMessage.trim(),
+                id_pet: pet.id_pet,
+            });
+
+            window.location.href = `/profile?petId=${pet.id_pet}&with=${pet.shelter.id_user}`;
+        } catch (err) {
+            console.error("Błąd przy wysyłaniu wiadomości:", err);
+            alert("Nie udało się wysłać wiadomości.");
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -168,7 +195,7 @@ export default function PetDetail() {
                                     {pet.status === "Do oddania" && (
                                         <button onClick={() => setShowForm(true)}>Wniosek o adopcję</button>
                                     )}
-                                    <button>Dopytaj o szczegóły</button>
+                                    <button onClick={() => setShowMessageModal(true)}>Dopytaj o szczegóły</button>
                                     {favourite ? (
                                         <button onClick={handleRemoveFavourite}>Usuń z ulubionych</button>
                                     ) : (
@@ -359,6 +386,29 @@ export default function PetDetail() {
                         </div>
                     </div>
                 </div>
+                <Dialog open={showMessageModal} onClose={() => setShowMessageModal(false)}>
+                    <DialogTitle>Napisz do schroniska</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            label="Twoja wiadomość"
+                            multiline
+                            rows={4}
+                            fullWidth
+                            value={initialMessage}
+                            onChange={(e) => setInitialMessage(e.target.value)}
+                            autoFocus
+                            variant="outlined"
+                            margin="normal"
+                            InputLabelProps={{shrink: true}}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setShowMessageModal(false)}>Anuluj</Button>
+                        <Button variant="contained" onClick={handleSendInitialMessage}>
+                            Wyślij
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

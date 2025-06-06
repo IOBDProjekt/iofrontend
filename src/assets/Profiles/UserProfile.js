@@ -6,6 +6,8 @@ import api from "../../api";
 import ChatSidebar from "../Chat/ChatSidebar";
 import ChatWindow from "../Chat/ChatWindow";
 
+import { useLocation } from "react-router-dom";
+
 const UserProfile = () => {
     const { user } = useUser();
     const [userData, setUserData] = useState({});
@@ -14,6 +16,25 @@ const UserProfile = () => {
     const [conversations, setConversations] = useState([]);
     const [activeConversation, setActiveConversation] = useState(null);
     const userId = Number(user?.id_user);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const petId = params.get("petId");
+        const withUser = params.get("with");
+
+        if (petId && withUser && conversations.length > 0) {
+            const conv = conversations.find(
+                (c) =>
+                    c.id_pet.toString() === petId &&
+                    c.conversation_with.toString() === withUser
+            );
+            if (conv) {
+                setActiveConversation(conv);
+            }
+        }
+    }, [location.search, conversations])
 
     useEffect(() => {
         if (!userId) return;

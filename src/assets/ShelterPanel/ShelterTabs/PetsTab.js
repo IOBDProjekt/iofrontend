@@ -45,6 +45,8 @@ const PetsTab = ({ pets, updatePets }) => {
             if (image !== null) {
                 const formData = new FormData();
                 formData.append("image", image);
+                
+                console.log(petData);
 
                 await api.put("/image/" + petData.id_image, formData, {
                     headers: {

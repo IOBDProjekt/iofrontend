@@ -7,6 +7,13 @@ const ChatWindow = ({ conversation, currentUser }) => {
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
+
+    useEffect(() => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -114,12 +121,6 @@ const ChatWindow = ({ conversation, currentUser }) => {
         setText("");
     };
 
-    useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [messages]);
-
     return (
         <div style={{ padding: 20 }}>
             <h3 style={{ marginBottom: 10 }}>
@@ -127,6 +128,7 @@ const ChatWindow = ({ conversation, currentUser }) => {
             </h3>
 
             <div
+            ref={messagesContainerRef}
                 style={{
                     height: 300,
                     overflowY: "scroll",
