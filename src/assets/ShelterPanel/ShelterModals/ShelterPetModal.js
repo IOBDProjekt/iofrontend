@@ -160,8 +160,8 @@ export default function ShelterPetModal({
 								onChange={(e) => setStatus(e.target.value)}
 								label="Status Zwierzaka"
 							>
-								<MenuItem value={"Samiec"}>Do oddania</MenuItem>
-								<MenuItem value={"Samica"}>Oddany</MenuItem>
+								<MenuItem value={"Do oddania"}>Do oddania</MenuItem>
+								<MenuItem value={"Oddany"}>Oddany</MenuItem>
 							</Select>
 						</FormControl>
 						<input
