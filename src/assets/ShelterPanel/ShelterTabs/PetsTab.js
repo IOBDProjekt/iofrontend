@@ -19,11 +19,14 @@ const PetsTab = ({ pets, updatePets, shelterId }) => {
             petData.id_shelter = shelterId;
 
             const response = await api.post("/pet", petData);
-            const petID = response.data.id_pet;
+            const petID = response.data.pet.id_pet;
 
             if (image !== null) {
                 const formData = new FormData();
                 formData.append("image", image);
+                
+                console.log(formData);
+                console.log("Plik:", image);
 
                 const imageResponse = await api.post("/image", formData, {
                     headers: {
