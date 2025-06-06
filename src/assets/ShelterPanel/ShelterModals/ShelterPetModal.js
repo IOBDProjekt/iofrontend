@@ -1,22 +1,21 @@
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "@mui/material";
 
-import api from "../../../api";
 import "./ShelterModals.css";
 
-export default function ShelterAccountModal({
-	title,
-	buttonText,
-	onSubmit,
-	errors,
-	setErrors,
-	type,
-	petInfo,
-	species,
-	breeds,
-	tags,
-}) {
+export default function ShelterPetModal({
+												title,
+												buttonText,
+												onSubmit,
+												errors,
+												setErrors,
+												type,
+												petInfo,
+												species,
+												breeds,
+												tags,
+											}) {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => {
@@ -48,7 +47,7 @@ export default function ShelterAccountModal({
 			sex: sex,
 			condition: condition,
 			status: status,
-			tagIDs: tagIDs,
+			tagIDs: tagIDs.filter((t) => t != null),
 			id_image: petInfo?.id_image,
 		};
 		const result = await onSubmit(data, image);
@@ -154,11 +153,17 @@ export default function ShelterAccountModal({
 							onChange={(e) => setCondition(e.target.value)}
 							placeholder="Stan zwierzaka"
 						/>
-						<input
-							value={status}
-							onChange={(e) => setStatus(e.target.value)}
-							placeholder="Status zwierzaka"
-						/>
+						<FormControl fullWidth>
+							<InputLabel id="sex-label">Status Zwierzaka</InputLabel>
+							<Select
+								value={status}
+								onChange={(e) => setStatus(e.target.value)}
+								label="Status Zwierzaka"
+							>
+								<MenuItem value={"Samiec"}>Do oddania</MenuItem>
+								<MenuItem value={"Samica"}>Oddany</MenuItem>
+							</Select>
+						</FormControl>
 						<input
 							type="file"
 							accept="image/*"
