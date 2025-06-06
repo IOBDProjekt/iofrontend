@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import api from "../../api";
 import ShelterTabs from "./ShelterTabs";
 import PetsTab from "./ShelterTabs/PetsTab";
@@ -11,20 +10,35 @@ import AdoptionFormsTab from "./ShelterTabs/AdoptionFormsTab";
 const ShelterPanel = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [pets, setPets] = useState([]);
+    const [shelterId, setShelterId] = useState(null);
 
     const fetchAllPets = async () => {
         try {
-            const id_response = await api.get("/auth/me");
-            const response = await api.get("/pet/shelter/" + id_response?.data?.id_user);
-            setPets((prev) => [...response?.data?.pets]);
-        } catch (error) {}
-    };
+            const meResponse = await api.get("/auth/me");
+            const userId = meResponse.data.id_user;
 
-    const tabs = [<PetsTab pets={pets} updatePets={fetchAllPets} />, <ChatTab />, <AdoptionFormsTab />];
+            const resp = await api.get("/pet/shelter/" + userId);
+            const petsArray = resp.data.pets;
+
+            setPets(petsArray);
+
+            if (petsArray.length > 0) {
+                setShelterId(petsArray[0].id_shelter);
+            }
+        } catch (error) {
+            console.error("Błąd przy fetchAllPets:", error);
+        }
+    };
 
     useEffect(() => {
         fetchAllPets();
     }, []);
+
+    const tabs = [
+        <PetsTab pets={pets} updatePets={fetchAllPets} shelterId={shelterId} />,
+        <ChatTab />,
+        <AdoptionFormsTab />,
+    ];
 
     return (
         <div className="shelter-panel">
