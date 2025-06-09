@@ -5,17 +5,17 @@ import { Modal } from "@mui/material";
 import "./ShelterModals.css";
 
 export default function ShelterPetModal({
-												title,
-												buttonText,
-												onSubmit,
-												errors,
-												setErrors,
-												type,
-												petInfo,
-												species,
-												breeds,
-												tags,
-											}) {
+	title,
+	buttonText,
+	onSubmit,
+	errors,
+	setErrors,
+	type,
+	petInfo,
+	species,
+	breeds,
+	tags,
+}) {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => {
@@ -62,7 +62,11 @@ export default function ShelterPetModal({
 			setAge(petInfo.age || "");
 			setSex(petInfo.sex || "");
 			setCondition(petInfo.condition || "");
-			setTagIDs(petInfo.tags.map((b) => b.id_tag) || []);
+			setTagIDs(
+				petInfo.tags.map(
+					(t) => tags.find((tag) => tag.character === t.character)?.id_tag,
+				) || [],
+			);
 			setStatus(petInfo.status || "");
 		}
 	}, [open]);
@@ -178,3 +182,4 @@ export default function ShelterPetModal({
 		</>
 	);
 }
+
