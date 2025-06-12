@@ -26,15 +26,13 @@ const UserProfile = () => {
 
         if (petId && withUser && conversations.length > 0) {
             const conv = conversations.find(
-                (c) =>
-                    c.id_pet.toString() === petId &&
-                    c.conversation_with.toString() === withUser
+                (c) => c.id_pet.toString() === petId && c.conversation_with.toString() === withUser
             );
             if (conv) {
                 setActiveConversation(conv);
             }
         }
-    }, [location.search, conversations])
+    }, [location.search, conversations]);
 
     useEffect(() => {
         if (!userId) return;
@@ -102,10 +100,14 @@ const UserProfile = () => {
                 {favourites.length > 0 ? (
                     <div className={styles["favourites"]}>
                         {favourites.map((fav) => {
+                            {
+                                console.log(fav);
+                            }
+
                             return (
-                                <div key={fav.id_favourite} className={styles["fav-item"]}>
-                                    <span>{fav.pet?.name}</span>
-                                    <a href={`/pet/${fav.pet?.id_pet}`}>Zobacz ogłoszenie</a>
+                                <div key={fav.id_pet} className={styles["fav-item"]}>
+                                    <span>{fav?.name}</span>
+                                    <a href={`/pet/${fav?.id_pet}`}>Zobacz ogłoszenie</a>
                                 </div>
                             );
                         })}
