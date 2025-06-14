@@ -11,7 +11,6 @@ export default function Navbar() {
     const handleRedirectToLogin = useRedirect("/login");
     const handleRedirectToRegister = useRedirect("/register");
     const handleRedirectToHome = useRedirect("/home");
-    const handleRedirectToAdvice = useRedirect("/advice");
     const handleRedirectToProfile = useRedirect("/profile");
 
     const { logoutUser, isUserLoggedIn, setRefreshFavourites } = useUser();
