@@ -77,7 +77,7 @@ const EmailForm = ({ formTitle, buttonText, submitLink }) => {
                 <Link to={"/login"}>
                     Masz już konto zaloguj się do naszej platformy!
                 </Link>
-                <Link to={"/register-shelter"}>
+                <Link to={"/application"}>
                     Wyślij wniosek o rejestrację schroniska!
                 </Link>
             </form>

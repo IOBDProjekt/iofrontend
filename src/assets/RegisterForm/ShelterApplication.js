@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./RegisterShelter.css";
+import "./ShelterApplication.css";
 import api from "../../api";
 
 function RegisterShelter() {
@@ -51,7 +51,7 @@ function RegisterShelter() {
 };
 
   return (
-    <div className="register-shelter-container">
+    <div className="shelter-application-container">
       <h2>Wniosek o rejestrację schroniska</h2>
       <form onSubmit={handleSubmit}>
       <div className="form-panels">
