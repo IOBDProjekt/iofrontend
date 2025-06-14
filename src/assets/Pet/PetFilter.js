@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
     Box,
     TextField,
@@ -14,9 +14,9 @@ import {
     Collapse,
     IconButton,
     Typography,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,18 +29,9 @@ const MenuProps = {
     },
 };
 
-const PetFilter = ({
-                       filters,
-                       onChange,
-                       breeds,
-                       shelters,
-                       speciesList,
-                       tagsList,
-                       sexList,
-                       statusList,
-                   }) => {
+const PetFilter = ({ filters, onChange, breeds, shelters, speciesList, tagsList, sexList, statusList }) => {
     const [open, setOpen] = useState(true);
-    const handleToggle = () => setOpen(prev => !prev);
+    const handleToggle = () => setOpen((prev) => !prev);
 
     const handleInput = (field) => (event) => {
         const value = event.target.value;
@@ -52,14 +43,14 @@ const PetFilter = ({
 
     const handleReset = () => {
         onChange({
-            name: '',
-            age: '',
-            condition: '',
-            id_breed: '',
-            id_shelter: '',
-            id_species: '',
-            sex: '',
-            status: '',
+            name: "",
+            age: "",
+            condition: "",
+            id_breed: "",
+            id_shelter: "",
+            id_species: "",
+            sex: "",
+            status: "",
             tags: [],
         });
     };
@@ -77,12 +68,7 @@ const PetFilter = ({
                     <Grid container spacing={2} alignItems="flex-end">
                         {/* Imię */}
                         <Grid item xs={12} sm={6} md={3}>
-                            <TextField
-                                label="Imię"
-                                value={filters.name}
-                                onChange={handleInput('name')}
-                                fullWidth
-                            />
+                            <TextField label="Imię" value={filters.name} onChange={handleInput("name")} fullWidth />
                         </Grid>
 
                         {/* Wiek */}
@@ -90,7 +76,7 @@ const PetFilter = ({
                             <TextField
                                 label="Wiek"
                                 value={filters.age}
-                                onChange={handleInput('age')}
+                                onChange={handleInput("age")}
                                 placeholder="np. 3-5"
                                 fullWidth
                             />
@@ -101,7 +87,7 @@ const PetFilter = ({
                             <TextField
                                 label="Stan zdrowia"
                                 value={filters.condition}
-                                onChange={handleInput('condition')}
+                                onChange={handleInput("condition")}
                                 fullWidth
                             />
                         </Grid>
@@ -112,7 +98,7 @@ const PetFilter = ({
                                 <InputLabel>Rasa</InputLabel>
                                 <Select
                                     value={filters.id_breed}
-                                    onChange={handleInput('id_breed')}
+                                    onChange={handleInput("id_breed")}
                                     label="Rasa"
                                     MenuProps={MenuProps}
                                 >
@@ -133,7 +119,7 @@ const PetFilter = ({
                                 <InputLabel>Gatunek</InputLabel>
                                 <Select
                                     value={filters.id_species}
-                                    onChange={handleInput('id_species')}
+                                    onChange={handleInput("id_species")}
                                     label="Gatunek"
                                     MenuProps={MenuProps}
                                 >
@@ -154,7 +140,7 @@ const PetFilter = ({
                                 <InputLabel>Schronisko</InputLabel>
                                 <Select
                                     value={filters.id_shelter}
-                                    onChange={handleInput('id_shelter')}
+                                    onChange={handleInput("id_shelter")}
                                     label="Schronisko"
                                     MenuProps={MenuProps}
                                 >
@@ -175,7 +161,7 @@ const PetFilter = ({
                                 <InputLabel>Płeć</InputLabel>
                                 <Select
                                     value={filters.sex}
-                                    onChange={handleInput('sex')}
+                                    onChange={handleInput("sex")}
                                     label="Płeć"
                                     MenuProps={MenuProps}
                                 >
@@ -197,11 +183,9 @@ const PetFilter = ({
                                 <Select
                                     multiple
                                     value={filters.tags}
-                                    onChange={handleInput('tags')}
+                                    onChange={handleInput("tags")}
                                     input={<OutlinedInput label="Tagi" />}
-                                    renderValue={(selected) =>
-                                        (Array.isArray(selected) ? selected.join(', ') : '')
-                                    }
+                                    renderValue={(selected) => (Array.isArray(selected) ? selected.join(", ") : "")}
                                     MenuProps={MenuProps}
                                 >
                                     {Array.isArray(tagsList) &&

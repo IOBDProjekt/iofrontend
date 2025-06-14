@@ -11,20 +11,22 @@ export default function Navbar() {
     const handleRedirectToLogin = useRedirect("/login");
     const handleRedirectToRegister = useRedirect("/register");
     const handleRedirectToHome = useRedirect("/home");
-    const handleRedirectToAdvice = useRedirect("/advice");
     const handleRedirectToProfile = useRedirect("/profile");
 
-    const { logoutUser, isUserLoggedIn, setRefreshFavourites } = useUser();
+    const { logoutUser, isUserLoggedIn, setRefreshFavourites, fetchUserRole, role } = useUser();
     const [favourites, setFavourites] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = () => {
         logoutUser();
-        localStorage.removeItem("authToken");
         handleRedirectToLanding();
     };
 
     const userStatus = isUserLoggedIn();
+
+    useEffect(() => {
+        if (userStatus) fetchUserRole();
+    }, []);
 
     useEffect(() => {
         const fetchFavourites = () => {
@@ -74,8 +76,7 @@ export default function Navbar() {
                         Profil
                     </button>
                 )}
-
-                {userStatus && (
+                {userStatus && role == "user" && (
                     <div className="favourites-dropdown">
                         <button className="nav-button" onClick={() => setDropdownOpen((prev) => !prev)}>
                             Ulubione
